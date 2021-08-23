@@ -1,0 +1,11 @@
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIARRHGKOKAM7LPOT2P
+      secretKey: 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
+    s3:
+      bucket: yeah24-image
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

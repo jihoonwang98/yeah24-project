@@ -21,8 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +34,7 @@ import java.util.List;
 @Slf4j
 public class UserService {
 
-    @Value("${spring.servlet.multipart.location}")
-    private String uploadPath;
-
-
+    private final S3UploadService uploadService;
     private final UserRepository userRepository;
     private final BookRepository bookRepository;
     private final PasswordEncoder passwordEncoder;
@@ -41,12 +42,12 @@ public class UserService {
     public Long register(UserRegisterDTO registerDTO) {
         registerDTO.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
+        MultipartFile profileImg = registerDTO.getProfileImg();
         String imgSrc = null;
 
-        if(!registerDTO.getProfileImg().isEmpty()) {
-            ImageUtils imageUtils = new ImageUtils(registerDTO.getProfileImg(), uploadPath, LocalDate.now());
-            imageUtils.copyImgToFolder();
-            imgSrc = imageUtils.getImgSrc();
+        if(!profileImg.isEmpty()) {
+            imgSrc = getImgSrc(profileImg);
+            uploadImage(profileImg, imgSrc);
         }
 
         User user = registerDTO.toEntity(imgSrc);
@@ -63,12 +64,11 @@ public class UserService {
     public void modifyUser(Long id, UserModifyDTO modifyDTO) {
         MultipartFile profileImg = modifyDTO.getProfileImg();
 
-
         String imgSrc = null;
+
         if (profileImg != null) {
-            ImageUtils imageUtils = new ImageUtils(profileImg, uploadPath, LocalDate.now());
-            imageUtils.copyImgToFolder();
-            imgSrc = imageUtils.getImgSrc();
+            imgSrc = getImgSrc(profileImg);
+            uploadImage(profileImg, imgSrc);
         }
 
         User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
@@ -80,6 +80,7 @@ public class UserService {
                 modifyDTO.getAddress()
         );
     }
+
 
     public void addBookToWishList(Long userId, List<Long> bookIds) {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException());
@@ -103,4 +104,19 @@ public class UserService {
         return bookRepository.findBookWishlistResponse(userId);
     }
 
+
+    private void uploadImage(MultipartFile profileImg, String imgSrc) {
+        try {
+            uploadService.upload(profileImg, imgSrc);
+        } catch (IOException e) {
+            log.error("IOException in register", e);
+        }
+    }
+
+    private String getImgSrc(MultipartFile profileImg) {
+        String folderPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")).replace("/", File.separator);
+        String uuid = UUID.randomUUID().toString();
+        String fileName = profileImg.getOriginalFilename();
+        return folderPath + File.separator + uuid + "_" + fileName;
+    }
 }
