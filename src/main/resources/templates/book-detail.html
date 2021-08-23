@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<head>
+    <!--<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    --><link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <style>
+        .gray-text {
+            color: #666666;
+        }
+
+        .black-color {
+            color: black;
+        }
+
+        .sky-color {
+            color: #6699cc;
+        }
+
+        .red-color {
+            color: red;
+        }
+
+        .table-color {
+            background-color: #F8F8F8 !important;
+        }
+
+        .display-inline-block {
+            display: inline-block;
+        }
+
+        .link-unstyled {
+            text-decoration: none;
+            color: black;
+        }
+
+        .link-unstyled:hover {
+            text-decoration: underline;
+            color: black;
+        }
+
+        /* Ratings widget */
+        .rate {
+            display: inline-block;
+            border: 0;
+        }
+        /* Hide radio */
+        .rate > input {
+            display: none;
+        }
+        /* Order correctly by floating highest to the right */
+        .rate > label {
+            float: right;
+        }
+        /* The star of the show */
+        .rate > label:before {
+            display: inline-block;
+            font-size: 1.1rem;
+            padding: .3rem .2rem;
+            margin: 0;
+            cursor: pointer;
+            font-family: FontAwesome;
+            content: "\f005 "; /* full star */
+        }
+        /* Zero stars rating */
+        .rate > label:last-child:before {
+            content: "\f006 "; /* empty star outline */
+        }
+        /* Half star trick */
+        .rate .half:before {
+            content: "\f089 "; /* half star no outline */
+            position: absolute;
+            padding-right: 0;
+        }
+        /* Click + hover color */
+        input:checked ~ label, /* color current and previous stars on checked */
+        label:hover, label:hover ~ label { color: #73B100;  } /* color previous stars on hover */
+
+        /* Hover highlights */
+        input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
+        input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
+        label:hover ~ input:checked ~ label /* highlight previous selected stars */ { color: #A6E72D;  }
+    </style>
+</head>
+
+<div layout:fragment="contents" th:with="book=${bookDetailResponse.book}, reviewDTO=${bookDetailResponse.book.review}">
+    <div class="d-flex p-5 align-items-center">
+        <div class="pe-4">
+            <img th:if="${book.imgSrc != null}" width="250px" th:src="@{/display(imgSrc=${book.imgSrc})}">
+            <img th:if="${book.imgSrc == null}" alt="책_이미지" width="250px" th:src="@{/img/no-image.jpg}">
+        </div>
+
+        <div class="container-fluid">
+            <div th:class="${book.stockQuantity == 0} ? 'text-decoration-line-through' : ''">
+                <h3 class="fw-bold" th:text="${book.name}">책이름</h3>
+                <span class="gray-text">
+                <span class="black-color lh-lg"
+                      th:each="author, iStat: ${bookDetailResponse.authors}">
+                    <a th:text="${iStat.last} ? ${author.name} : ${author.name} + ', '"
+                       th:href="@{/authors/{authorId}(authorId=${author.id})}"
+                       class="link-unstyled">
+                        저자명
+                    </a>
+                </span>
+                저 | <th:block>2021년 07월 07일</th:block></span></span>
+                <div>별점 <span class="fw-bold fs-5" th:text="${book.review.count != 0} ? ${#numbers.formatDecimal(book.review.rating, 1, 1)} : '0.0'">10.0</span></div>
+                <div class="pt-2">회원리뷰(<span class="sky-color" th:text="${book.review.count}">1</span>건)</div>
+                <div class="pt-2">재고: <span th:text="${book.stockQuantity}"></span>권</div>
+                <hr>
+
+                <dl class="row pt-3">
+                    <dt class="col-3">정가</dt>
+                    <dd class="col-9" th:text="${book.price} + '원'">14,000원</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div th:if="${book.stockQuantity == 0}"  class="h3 text-center p-5" style="color: red;">
+            품절
+        </div>
+
+        <div th:if="${#authorization.expr('isAuthenticated()')}" class="d-flex flex-column align-items-center p-3">
+            <button id="wishlist-add-btn" class="btn btn-info m-3">Wishlist에 추가하기</button>
+
+            <button id="add-to-cart-btn" class="btn btn-info m-3">장바구니에 넣기</button>
+        </div>
+    </div>
+
+
+    <div class="p-5">
+        <h4 class="fw-bold">품목정보</h4>
+        <table class="mt-4 table table-bordered">
+            <tr>
+                <td class="table-color text-center fw-bold">출간일</td>
+                <td class="ps-3" th:text="${#temporals.format(book.publicationDate, 'yyyy년 MM월 dd일')}">2021년 07월 07일</td>
+            </tr>
+
+            <tr>
+                <td class="table-color text-center fw-bold">ISBN</td>
+                <td class="ps-3" th:text="${book.isbn}">8954680690</td>
+            </tr>
+        </table>
+
+
+        <h4 class="mt-5 pt-5 fw-bold">카테고리 분류</h4>
+        <li class="ps-3 pt-3">
+
+            <th:block th:each="category, iStat: ${bookDetailResponse.categories}">
+                <a th:text="${category.name}"
+                   th:href="@{/categories/{cateId}/books(cateId = ${category.id})}"
+                   class="link-unstyled"
+                >카테고리명</a>
+                <span th:if="${!iStat.last}"> > </span>
+            </th:block>
+            <!-- 국내도서 > 소설/시/희곡 > 한국소설 > 한국 단편소설 -->
+        </li>
+
+
+        <h4 class="mt-5 pt-5 fw-bold">책소개</h4>
+        <span class="display-inline-block mt-4 pb-5" th:text="${book.bio}">다가올 시간을 새롭게 마주하게 하는 힘,
+싱그러운 삶의 조각들로 생동하는 윤성희의 세계
+2019 김승옥문학상 대상 수상작 「어느 밤」 수록!
+
+완숙하고 예리한 시선을 바탕으로 인간과 삶에 대한 긍정으로 나아가는 이야기를 선보이는 작가 윤성희의 여섯번째 소설집 『날마다 만우절』이 출간되었다. 이십 년이 넘는 시간 동안 다섯 권의 소설집과 두 권의 장편소설 그리고 한 권의 중편소설을 출간하며 기복 없이 고른 작품활동을 이어온 그이지만, 2016년 봄부터 2020년 겨울까지 쓰인 열한 편의 단편이 묶인 이번 소설집은 그전과는 또다른 아우라를 내뿜으며 윤성희 소설세계의 새로운 챕터를 열어젖히고 있다는 점에서 그에게 ‘단편소설의 마에스트로’라는 수식을 붙이는 데 주저함이 없게 한다.
+
+특히 ‘훔친 킥보드를 타고 달리는 할머니’라는 인상적인 인물을 그려내어 “홀린 듯 읽으며 경험하는 이 놀라움은 윤성희를 읽는 이에게만 주어지는 선물이다”라는 평과 함께 2019 김승옥문학상 대상작으로 선정된 「어느 밤」을 포함해, 그간 한국문학에서 충분히 조명되지 않았던 ‘노년 여성’의 삶을 다각도로 묘사해내며 “윤성희의 소설과 견줄 수 있는 소설은 윤성희의 소설밖에 없다는 것을 새삼 느꼈다”(문학평론가 이지은), “이만큼이나 인간에 대한 애정을 넘겨받기 적당한 온도로 갈무리해 글로 옮겨내는 작가가 또 있을까”(문학평론가 김녕)라는 호평을 받은 작품들이 한데 모인 이번 소설집은 한여름에 맞이하는 크리스마스처럼 우리에게 뜻밖의 선물을 건네받는 듯한 기쁨을 안겨줄 것이다.
+    </span>
+        <hr>
+
+        <h4 class="mt-5 fw-bold">저자 소개</h4>
+
+        <div class="card mt-5 mb-5" th:each="author: ${bookDetailResponse.authors}">
+            <div class="card-header">
+                <a class="link-unstyled"
+                   th:href="@{/authors/{authorId}(authorId=${author.id})}"
+                   th:text="'저: ' + ${author.name}">저: 윤성희</a>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+
+                    <img th:if="${author.imgSrc == null}" width="100px" height="100px" class="rounded-circle float-start me-4"
+                         th:src="@{/img/no-image.jpg}">
+
+                    <img th:if="${author.imgSrc != null}" width="100px" height="100px" class="rounded-circle float-start me-4"
+                         th:src="@{/display(imgSrc=${author.imgSrc})}">
+
+                    <span th:text="${author.bio}">1973년 경기도 수원 출생으로 청주대 철학과와 서울예대 문예창작과를 졸업하였다. 1999년 [동아일보] 신춘문예에 단편소설 「레고로 만든 집」이 당선되어 등단했고, 「서른세 개의 단추가 달린 코트」가 2001년 「계단」이 연이어 『현장 비평가가 뽑은 올해의 좋은 소설 2001』에 실렸으며, 「모자」는 『2001년 현대문학상 수상 작품집』에, 「그림자들」은 『2001년 이상문학상 수상 작품집』에 수록되었다. 「유턴지점에 보물지도를 묻다」로 현대문학상을 수상했다. 「부메랑」으로 2011년 11회 황순원문학상을 수상했다. 그 밖에 이수문학상, 이효석문학상, 오늘의 젊은 예술가상, 한국일보문학상, 김승옥문학상 대상을 수상했다. 소설집 『레고로 만든 집』, 『거기, 당신?』, 『감기』, 『웃는 동안』, 『베개를 베다』, 『날마다 만우절』 등이 있고, 중편소설 『첫 문장』, 장편소설 『구경꾼들』, 『상냥한 사람』, 중편소설 『첫 문장』 등이 있다.
+                </span>
+                </p>
+            </div>
+        </div>
+
+
+        <hr>
+
+        <h4 class="mt-5 fw-bold">회원 리뷰
+            <span th:text="'(' + ${reviewDTO.count} + '건)'">(3건)</span>
+        </h4>
+
+        <th:block th:if="${reviewDTO.count != 0}">
+            <h5>평균 별점:
+                <span style="line-height: 3em;" th:text="${#numbers.formatDecimal(reviewDTO.rating, 1, 1)}"></span>
+            </h5>
+
+            <div class="card mt-5 mb-5" th:each="review: ${reviewDTO.reviews}">
+                <div class="card-body">
+                    <p class="card-text">
+                    <div class="d-flex align-items-center">
+                        <div style="width: 200px;" class="d-flex flex-column align-items-center">
+                            <div>
+                                <img th:if="${review.user.profileImg == null}" width="150px" height="150px" class="rounded-circle" th:src="@{/img/no-image.jpg}">
+                                <img th:if="${review.user.profileImg != null}" width="150px" height="150px" class="rounded-circle" th:src="@{/display(imgSrc=${review.user.profileImg})}">
+                            </div>
+                            <div style="width: 200px;" class="pt-4 text-center">
+                                <span th:text="${#temporals.format(review.regDate, 'yyyy-MM-dd')}">2021-07-30</span><br><br>
+
+                                <a th:text="${review.user.nickname}"
+                                   th:data-toggle="'popover-' + ${reviewStat.count}"
+                                   class="link-unstyled">유저1</a>
+
+                                <ul th:id="'popover-content-' + ${reviewStat.count}" class="list-group" style="display: none">
+                                    <a th:href="@{/users/{userId}/reviews(userId=${review.user.userId})}" class="list-group-item">작성자가 쓴 리뷰 목록</a>
+                                    <a th:href="@{/users/{userId}/wishlist(userId=${review.user.userId})}" class="list-group-item">작성자의 Wishlist</a>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="container ms-4">
+                            <span class="h5">별점</span>
+                            <span class="fw-bold" th:text="${#numbers.formatDecimal(review.rating, 1, 1)}">5.0</span>
+                            <span>
+                                <th:block th:if="${review.rating == 0.0}">
+                                    <i class="icon-star-empty"></i>
+                                </th:block>
+
+                                <th:block th:if="${review.rating != 0.0}">
+                                    <th:block th:each="num: ${#numbers.sequence(1, T(Math).floor(review.rating))}">
+                                        <i class="icon-star"></i>
+                                    </th:block>
+                                    <th:block th:if="${(review.rating - T(Math).floor(review.rating)) == 0.5}">
+                                        <i class="icon-star-half-empty"></i>
+                                    </th:block>
+                                </th:block>
+                            </span>
+                            <br>
+                            <p class="pt-3">
+                                <h5 class="d-inline">제목</h5>
+                                <h5 class="d-inline fw-bold" th:text="${review.name}">리뷰 제목</h5>
+                            </p>
+
+                            <p class="pt-3">
+                                <h5>내용</h5>
+                                <span th:text="${review.content}">믿고 보는 윤성희 작가! 어느 밤과 아무도 미워하지 않는 밤이 너무 좋았습니다.</span>
+                            </p>
+                        </div>
+
+                        <div th:if="${reviewExists != null && (review.user.userId == #authentication.principal.user.id)}">
+                           <button id="review-remove-btn" class="btn btn-info">삭제</button>
+                        </div>
+                    </div>
+                    </p>
+                </div>
+            </div>
+        </th:block>
+        <hr/>
+        <br/>
+
+        <div th:if="${#authorization.expr('isAuthenticated()')}" class="card">
+            <div class="card-body">
+                <p class="card-text">
+                <form>
+                    <h4 class="display-inline-block mb-4">리뷰 작성하기</h4>
+
+                    <input type="hidden" id="bookId" th:value="${id}">
+                    <input type="hidden" id="userId" th:value="${#authentication.principal.user.id}">
+
+                    <div class="mb-3">
+                        <label for="review-name" class="form-label">리뷰 제목</label>
+                        <input type="text" class="form-control" id="review-name" th:disabled="${reviewExists}" th:value="${reviewExists} ? '이미 리뷰를 등록하셨습니다.' : ''">
+                        <div id="invalid-review-name" class="invalid-feedback"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="review-content" class="form-label">리뷰 내용</label>
+                        <textarea class="form-control" id="review-content" rows="3" th:disabled="${reviewExists}"></textarea>
+                        <div id="invalid-review-content" class="invalid-feedback"></div>
+                    </div>
+
+                    <span>별점 매기기</span><br/>
+
+                    <fieldset class="rate" id="rating">
+                        <input type="radio" id="rating10" name="rating" value="5.0" /><label for="rating10" title="5 stars"></label>
+                        <input type="radio" id="rating9" name="rating" value="4.5" /><label class="half" for="rating9" title="4 1/2 stars"></label>
+                        <input type="radio" id="rating8" name="rating" value="4.0" /><label for="rating8" title="4 stars"></label>
+                        <input type="radio" id="rating7" name="rating" value="3.5" /><label class="half" for="rating7" title="3 1/2 stars"></label>
+                        <input type="radio" id="rating6" name="rating" value="3.0" /><label for="rating6" title="3 stars"></label>
+                        <input type="radio" id="rating5" name="rating" value="2.5" /><label class="half" for="rating5" title="2 1/2 stars"></label>
+                        <input type="radio" id="rating4" name="rating" value="2.0" /><label for="rating4" title="2 stars"></label>
+                        <input type="radio" id="rating3" name="rating" value="1.5" /><label class="half" for="rating3" title="1 1/2 stars"></label>
+                        <input type="radio" id="rating2" name="rating" value="1.0" /><label for="rating2" title="1 star"></label>
+                        <input type="radio" id="rating1" name="rating" value="0.5" /><label class="half" for="rating1" title="1/2 star"></label>
+                        <input type="radio" id="rating0" name="rating" value="0.0" /><label for="rating0" title="No star"></label>
+                    </fieldset>
+                    <div id="invalid-review-rating" class="invalid-feedback"></div>
+
+                    <br/>
+                </form>
+                <div th:if="${!reviewExists}" class="d-flex justify-content-end">
+                    <button id="review-post-button" class="btn btn-info">리뷰 등록</button>
+                </div>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script th:inline="javascript" layout:fragment="myScript">
+
+    $(function () {
+        let size = [[${bookDetailResponse.book.review.count}]];
+
+        for (let i = 1; i <= size; i++) {
+            let attrVal = "popover-" + i;
+
+            $('[data-toggle=' + attrVal + ']').popover({
+                html: true,
+                content: function () {
+                    return $('#popover-content-' + i).html();
+                }
+            });
+        }
+    });
+
+    function init() {
+        $('#review-name').removeClass('is-invalid');
+        $('#rating').removeClass('is-invalid');
+        $('#review-content').removeClass('is-invalid');
+    }
+
+    $('#review-post-button').click(function () {
+        let rating = $('input[name=rating]:checked').val();
+        let content = $('#review-content').val().trim();
+        let name = $('#review-name').val().trim();
+        let bookId = $('#bookId').val();
+        let userId = $('#userId').val();
+
+        let sendData = {
+            "userId": userId,
+            "bookId": bookId,
+            "name": name,
+            "rating": rating,
+            "content": content
+        };
+
+        $.ajax({
+            url: '/api/reviews',
+            method: 'POST',
+            data: JSON.stringify(sendData),
+            contentType: 'application/json; charset=UTF-8',
+            dataType: 'text',
+            success: function (result) {
+                alert('리뷰 작성 완료');
+                window.location.href = '/books/' + bookId;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                init();
+                let response = jQuery.parseJSON(jqXHR.responseText);
+                console.log(response);
+
+                for (let i = 0; i < response.length; i++) {
+                    console.log("field: " + response[i].field);
+
+                    if (response[i].field === 'name') {
+                        $('#review-name').addClass('is-invalid');
+                        $('#invalid-review-name').text('제목을 입력해야 합니다.');
+                    }
+
+                    if (response[i].field === 'rating') {
+                        $('#rating').addClass('is-invalid');
+                        $('#invalid-review-rating').text('별점 평가를 해야 합니다.');
+                    }
+
+                    if (response[i].field === 'content') {
+                        $('#review-content').addClass('is-invalid');
+                        $('#invalid-review-content').text('내용을 입력해야 합니다.');
+                    }
+                }
+            }
+        });
+    });
+
+    $('#review-remove-btn').click(function () {
+        let bookId = $('#bookId').val();
+        let userId = $('#userId').val();
+
+        let sendData = {
+            "userId": userId,
+            "bookId": bookId
+        };
+
+        $.ajax({
+            url: '/api/reviews',
+            method: 'DELETE',
+            data: JSON.stringify(sendData),
+            contentType: 'application/json; charset=UTF-8',
+            dataType: 'text',
+            success: function (result) {
+                alert('리뷰 삭제 완료');
+                window.location.href = '/books/' + bookId;
+            },
+            error: function (error) {
+                alert(error);
+            }
+        })
+    });
+
+    $('#wishlist-add-btn').click(function () {
+        let bookId = $('#bookId').val();
+        let userId = $('#userId').val();
+
+        let sendData = [];
+        sendData.push(bookId);
+
+        $.ajax({
+            url: '/api/users/' + userId + '/wishlist',
+            method: 'POST',
+            data: JSON.stringify(sendData),
+            contentType: 'application/json; charset=UTF-8',
+            dataType: 'text',
+            success: function (result) {
+                alert('wishlist에 추가 완료');
+                window.location.href = '/books/' + bookId;
+            },
+            error: function (error) {
+                alert(error);
+            }
+        })
+
+        // window.location.href = '/books/' + bookId;
+    });
+
+    $('#add-to-cart-btn').click(function () {
+
+        let bookIds = [];
+        let bookId = $('#bookId').val();
+        bookIds.push(bookId);
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/cart',
+            dataType: 'text',
+            data: JSON.stringify(bookIds),
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){
+                alert('장바구니에 추가 완료');
+                window.location.href = '/books/' + bookId;
+            },
+            error: function(err){
+                alert('장바구니에 추가 중 에러 발생');
+                console.log(err);    //에러가 발생하면 콘솔 로그를 찍어준다.
+            }
+        });
+    })
+</script>
+</html>

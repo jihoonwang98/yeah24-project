@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<head>
+    <style>
+        .card {
+            margin-bottom: 30px;
+        }
+
+        .emphasize {
+            font-weight: bolder;
+            font-size: 1.5em;
+        }
+
+        .line-height {
+            line-height: 1em;
+        }
+
+        .link-hover {
+            text-decoration: none;
+        }
+
+        .link-hover:hover{
+            text-decoration: underline;
+        }
+
+        .gray-text {
+            color: #999999;
+        }
+
+        .review-count {
+            color: #0d6efd;
+        }
+
+        .black-color {
+            color: black;
+        }
+
+        .text-overflow {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            /* 여러 줄 자르기 추가 스타일 */
+            white-space: normal;
+            line-height: 1.2;
+            height: 3.6em;
+            text-align: left;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+</head>
+
+<div class="container" layout:fragment="contents">
+    <h1 class="pt-5 ps-5 text-center">메인 페이지</h1>
+
+
+    <h3 class="pt-5 ps-5">카테고리</h3>
+    <div class="row pt-5 ps-5">
+
+        <div th:each="category: ${parents.get('categories')}" class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${category.name}"></h5>
+                    <a th:href="@{/categories/{cateId}/books(cateId=${category.id})}" class="btn-sm btn-primary text-decoration-none">이동</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pt-5 ps-5 pb-5">
+        <h4 class="fw-bold text-decoration-underline">↑ 현재 도서 데이터가 <span style="color: red">IT 모바일</span> 카테고리만 저장되어 있음.. ↑</h4>
+    </div>
+
+
+    <h3 class="pt-5 ps-5">신간 도서</h3>
+
+    <div id="carouselExampleDark" class="carousel carousel-dark slide pt-5 ps-5 pb-5" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item" th:classappend="${bookStat.first} ? 'active': ''" data-bs-interval="10000" th:each="book: ${newBooks}">
+                <div class="container-fluid d-flex flex-row align-items-center">
+                    <div class="p-4">
+                        <img th:if="${book.imgSrc != null}" th:src="@{/display(imgSrc=${book.imgSrc})}" width="130px" class="d-block">
+                        <img th:if="${book.imgSrc == null}" th:src="@{/img/no-image.jpg}" width="130px" class="d-block">
+                    </div>
+
+                    <div>
+                        <h5>
+                            <a class="link-dark link-hover" th:href="@{/books/{bookId}(bookId=${book.id})}" th:text="${book.name}">오늘 밤, 세계에서 이 사랑이 사라진다 해도</a>
+                        </h5>
+                        <p class="book-info">
+                        <span class="gray-text">
+                            <a th:each="author, iStat: ${book.authors}" th:text="${#strings.concat(author.name, (iStat.last ? '' : ', '))}" th:href="@{/authors/{authorId}(authorId=${author.id})}" class="link-dark link-hover">
+                                이치조 마사키
+                            </a>
+                            저 | <span th:text="${#temporals.format(book.publicationDate, 'yyyy년 MM월')}">2021년 06월</span>
+                        </span>
+                        <p class="line-height">
+                            <span th:text="${book.price}" class="emphasize">12,600</span>원
+                        </p>
+                        <p class="line-height">
+                            <span class="gray-text">
+                                회원리뷰(<span class="review-count" th:text="${book.review != null} ? ${book.review.reviewCount} : '0'">12</span>건)
+                                <span class="black-color">별점 <span class="emphasize" th:text="${book.review != null} ? ${#numbers.formatDecimal(book.review.avgRating, 1, 1)} : '0.0'">9.5</span></span>
+                            </span>
+                        </p>
+                        </p>
+                        <p class="text-overflow" th:text="${book.bio}">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+</div>
+
+
+<script layout:fragment="myScript">
+</script>
+</html>

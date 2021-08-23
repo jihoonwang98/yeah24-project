@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<head>
+    <style>
+        .category-container {
+            border: 1px solid #6699CC;
+            color: #6699CC;
+        }
+
+        .list-inline-item {
+            margin-top: 13px;
+        }
+
+        .card {
+            margin-top: 30px;
+        }
+
+        .link-hover {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .link-hover:hover{
+            text-decoration: underline;
+        }
+
+        .gray-text {
+            color: #999999;
+        }
+
+        .emphasize {
+            font-weight: bolder;
+            font-size: 1.5em;
+        }
+
+        .line-height {
+            line-height: 1em;
+        }
+
+        .review-count {
+            color: #0d6efd;
+        }
+
+        .black-color {
+            color: black;
+        }
+
+        .card-text {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            /* 여러 줄 자르기 추가 스타일 */
+            white-space: normal;
+            line-height: 1.2;
+            height: 3.6em;
+            text-align: left;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .paging-container {
+            margin-top: 20px;
+            padding-left: 15px;
+            border: 1px solid #6699CC;
+        }
+
+        .pagination{
+            color: #6699CC;
+            margin-bottom: 5px;
+        }
+
+        .blue-color {
+            color: #6699CC;
+        }
+
+        .hover-class:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+
+<div class="p-5" layout:fragment="contents">
+
+    <h2 class="mb-4">검색 페이지</h2>
+
+    <form id="my-form" method="get" style="display: none" th:object="${bookSearch}">
+        <input id="input-type" type="hidden" th:field="*{searchParam.type}">
+        <input id="input-keyword" type="hidden" th:field="*{searchParam.keyword}">
+        <input id="input-size" type="hidden" th:field="*{pageParam.size}">
+        <input id="input-page" type="hidden" th:field="*{pageParam.page}">
+        <input id="input-orderBy" type="hidden" th:field="*{pageParam.orderBy}">
+    </form>
+
+    <div class="paging-container">
+        <div class="d-flex justify-content-between align-items-center">
+            <ul class="list-unstyled list-inline">
+                <li class="list-inline-item"
+                    th:classappend="${bookSearch.pageParam.orderBy == null || bookSearch.pageParam.orderBy.isEmpty() || bookSearch.pageParam.orderBy.equals('null')} ? 'text-decoration-underline'">
+                    <a class="blue-color link-hover" onclick="submitMyForm(null, null, null, 1, '')">기본순</a>
+                </li>
+
+                <li class="list-inline-item"
+                    th:classappend="${bookSearch.pageParam.orderBy != null && bookSearch.pageParam.orderBy.equals('price')} ? 'text-decoration-underline'">
+                    <a class="blue-color link-hover" onclick="submitMyForm(null, null, null, 1, 'price')">최저가순</a>
+                </li>
+
+                <li class="list-inline-item"
+                    th:classappend="${bookSearch.pageParam.orderBy != null && bookSearch.pageParam.orderBy.equals('new')} ? 'text-decoration-underline'">
+                    <a class="blue-color link-hover" onclick="submitMyForm(null, null, null, 1, 'new')">신상품순</a>
+                </li>
+            </ul>
+
+            <div class="d-flex">
+                <select class="form-select me-3" aria-label=".form-select-sm example"
+                        name="size"
+                        onchange="changePageSizeListenerFunction()"
+                        id="page-size-select">
+                    <option th:selected="${bookSearch.pageParam.size == null || bookSearch.pageParam.size == 3}" value="3">3개씩 보기</option>
+                    <option th:selected="${bookSearch.pageParam.size == 6}" value="6">6개씩 보기</option>
+                </select>
+            </div>
+        </div>
+
+        <ul th:if="${bookSearchResponse.pageResult.totalPages != 0}" class="pagination">
+            <!--<li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>-->
+
+
+            <li class="page-item"
+                th:if="${bookSearchResponse.pageResult.prevBtn}">
+                <a class="page-link hover-class"
+                   th:onclick="|javascript:submitMyForm(null, null, null, '${bookSearchResponse.pageResult.startPage-1}', null)|"
+
+                   aria-label="Next">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+
+            <li class="page-item"
+                th:each="num: ${#numbers.sequence(bookSearchResponse.pageResult.startPage, bookSearchResponse.pageResult.endPage)}"
+                th:classappend="(${bookSearchResponse.pageResult.page} == ${num}) ? 'active': ''">
+                <a class="page-link hover-class"
+                   th:onclick="|javascript:submitMyForm(null, null, null, '${num}', null)|">[[${num}]]</a>
+            </li>
+
+
+            <li class="page-item"
+                th:if="${bookSearchResponse.pageResult.nextBtn}">
+                <a class="page-link hover-class"
+                   th:oncanplay="|javascript:submitMyForm(null, null, null, '${bookSearchResponse.pageResult.endPage+1}', null)|"
+                   aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+
+            <!--<li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>-->
+        </ul>
+
+    </div>
+
+
+
+    <div th:each="book: ${bookSearchResponse.books}" class="card d-flex flex-row align-items-center">
+        <div class="p-4">
+            <img th:if="${book.imgSrc != null}" th:src="@{/display(imgSrc=${book.imgSrc})}" width="130px">
+            <img th:if="${book.imgSrc == null}" th:src="@{/img/no-image.jpg}" width="130px">
+        </div>
+        <div class="card-body">
+            <div th:classappend="${book.stockQuantity == 0} ? 'text-decoration-line-through' : ''">
+                <h5 class="card-title">
+                    <a class="link-dark link-hover" th:href="@{/books/{bookId}(bookId=${book.id})}" th:text="${book.name}">오늘 밤, 세계에서 이 사랑이 사라진다 해도</a>
+                </h5>
+                <p class="book-info">
+                <span class="gray-text">
+                    <a th:each="author, iStat: ${book.authors}" th:text="${#strings.concat(author.name, (iStat.last ? '' : ', '))}" th:href="@{/authors/{authorId}(authorId=${author.id})}" class="link-dark link-hover">
+                        이치조 마사키
+                    </a>
+                    저 | <span th:text="${#temporals.format(book.publicationDate, 'yyyy년 MM월')}">2021년 06월</span>
+                </span>
+                <p class="line-height">
+                    <span th:text="${book.price}" class="emphasize">12,600</span>원
+                </p>
+                <p class="line-height">
+                    <span class="gray-text">
+                        회원리뷰(<span class="review-count" th:text="${book.review != null} ? ${book.review.reviewCount} : '0'">12</span>건)
+                        <span class="black-color">별점 <span class="emphasize" th:text="${book.review != null} ? ${#numbers.formatDecimal(book.review.avgRating, 1, 1)} : '0.0'">9.5</span></span>
+                    </span>
+                </p>
+                <p class="line-height pt-1 pb-1">
+                    재고: <span th:text="${book.stockQuantity}"></span>권
+                </p>
+                </p>
+                <p class="card-text" th:text="${book.bio}">
+                </p>
+            </div>
+
+            <div class="mt-4 h3">
+                <span th:if="${book.stockQuantity == 0}" style="color: red">품절입니다.</span>
+            </div>
+
+        </div>
+
+        <div>
+            <div class="form-check p-3 m-3">
+                <input class="form-check-input" type="checkbox" name="bookId" th:value="${book.id}" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">Check</label>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${bookSearchResponse.pageResult.totalPages == 0}" class="p-5">
+        <h3>검색 조건에 해당하는 도서가 없습니다..</h3>
+    </div>
+
+
+    <div th:if="${#authorization.expr('isAuthenticated()') && bookSearchResponse.pageResult.totalPages != 0}" class="mt-5">
+        <input type="hidden" id="userId" th:value="${#authentication.principal.user.id}" />
+        <button id="add-to-wishlist-btn" class="btn btn-info">wishlist에 일괄 추가하기</button> <br/>
+        <button id="add-to-cart-btn" class="btn btn-success mt-3">장바구니에 일괄 추가하기</button>
+    </div>
+</div>
+
+
+<script th:inline="javascript" layout:fragment="myScript">
+
+    function changePageSizeListenerFunction() {
+        let size = $("#page-size-select").val();
+        let orderBy = [[${bookSearch.pageParam.orderBy}]];
+
+        submitMyForm(null, null, size, 1, orderBy);
+    }
+
+    function submitMyForm(type, keyword, size, page, orderBy) {
+        let formTag = $('#my-form');
+
+        let typeVal = $('#input-type').val();
+        let keywordVal = $('#input-keyword').val();
+        let sizeVal = $('#input-size').val();
+        let pageVal = $('#input-page').val();
+        let orderByVal = $('#input-orderBy').val();
+
+        console.log("typeVal: " + typeVal);
+        console.log("keywordVal: " + keywordVal);
+        console.log("sizeVal: " + sizeVal);
+        console.log("pageVal: " + pageVal);
+        console.log("orderByVal: " + orderByVal);
+
+        console.log("type: " + type);
+        console.log("keyword: " + keyword);
+        console.log("size: " + size);
+        console.log("page: " + page);
+        console.log("orderBy: " + orderBy);
+
+        type = (type === null) ? typeVal : type;
+        size = (size === null) ? sizeVal : size;
+        keyword = (keyword === null) ? keywordVal : keyword;
+        page = (page === null) ? pageVal : page;
+        orderBy = (orderBy === null) ? orderByVal : orderBy;
+
+        $('#input-type').val(type);
+        $('#input-keyword').val(keyword);
+        $('#input-size').val(size);
+        $('#input-page').val(page);
+        $('#input-orderBy').val(orderBy);
+
+        formTag.submit();
+    }
+
+    $('#add-to-wishlist-btn').click(function () {
+
+        let bookIds = [];
+        let userId = $('#userId').val();
+
+
+        $('input[name="bookId"]:checked').each(function (index) {
+            bookIds.push($(this).val());
+        })
+
+        console.log(bookIds);
+        console.log(userId);
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/users/' + userId +'/wishlist',
+            dataType: 'text',
+            data: JSON.stringify(bookIds),
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){
+                alert('wishlist에 추가 완료');
+                window.location.href = '/users/' + userId + '/wishlist';
+            },
+            error: function(err){
+                alert('wishlist에 추가 중 에러 발생');
+                console.log(err);    //에러가 발생하면 콘솔 로그를 찍어준다.
+            }
+        });
+    })
+
+
+    $('#add-to-cart-btn').click(function () {
+
+        let bookIds = [];
+
+        $('input[name="bookId"]:checked').each(function (index) {
+            bookIds.push($(this).val());
+        })
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/cart',
+            dataType: 'text',
+            data: JSON.stringify(bookIds),
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){
+                alert('장바구니에 추가 완료');
+                window.location.href = '/cart';
+            },
+            error: function(err){
+                alert('장바구니에 추가 중 에러 발생');
+                console.log(err);    //에러가 발생하면 콘솔 로그를 찍어준다.
+            }
+        });
+    })
+
+</script>
+</html>

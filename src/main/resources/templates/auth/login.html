@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<style layout:fragment="myCss">
+</style>
+
+
+<div layout:fragment="contents">
+    <h2 class="p-4"> 로그인 페이지 </h2>
+    <div class="p-4">
+
+        <form class="row g-3" th:action="@{/auth/login}" method="post">
+            <div class="col-md-12 pb-2">
+                <label for="username" class="form-label">아이디</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+            <div class="col-md-12 pb-2">
+                <label for="password" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+
+            <div th:if="${param.error}" class="col" style="color: red; font-weight: bold; text-decoration: underline">
+                로그인에 실패했습니다.
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">로그인</button>
+            </div>
+        </form>
+        <br/>
+        <br/>
+        <hr/>
+
+        <a class="btn btn-dark" th:href="@{/oauth2/authorization/google}">구글 로그인</a>
+        <a class="btn btn-dark" th:href="@{/oauth2/authorization/naver}">네이버 로그인</a> <br/>
+    </div>
+
+</div>
+
+
+<script layout:fragment="myScript">
+</script>
+</html>

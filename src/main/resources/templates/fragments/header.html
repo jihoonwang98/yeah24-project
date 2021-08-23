@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:fragment="headerFragment" class="navbar navbar-expand-md bg-dark navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/img/logo.png}" style="height:60px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/auth/login}">로그인</a>
+                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/auth/logout}">로그아웃</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/auth/join}">회원가입</a>
+                </li>
+                <li sec:authorize="hasRole('USER')" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        마이페이지
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" th:href="@{/users/{id}/orders(id=${#authentication.principal.user.id})}">주문내역</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" th:href="@{/users/{id}/wishlist(id=${#authentication.principal.user.id})}">Wishlist</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" th:href="@{/users/{id}(id=${#authentication.principal.user.id})}">회원 정보</a>
+                        </li>
+                        <!--<li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+                    </ul>
+                </li>
+                <li sec:authorize="hasRole('USER')" class="nav-item">
+                    <a class="nav-link position-relative" th:href="@{/cart}">
+                        카트
+                        <span th:text="${#authentication.principal.user.carts.size()}" class="position-absolutetranslate-middle badge rounded-pill bg-danger"></span>
+                    </a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <select class="form-select form-select-sm" name="type" aria-label=".form-select-sm example" style="margin-right: 15px;">
+                    <option selected th:selected="${bookSearch != null && bookSearch.searchParam != null && bookSearch.searchParam.type.equals('author')}" value="author">저자명검색</option>
+                    <option th:selected="${bookSearch != null && bookSearch.searchParam != null &&  bookSearch.searchParam.type.equals('name')}" value="name">도서명검색</option>
+                    <option th:selected="${bookSearch != null && bookSearch.searchParam != null &&  bookSearch.searchParam.type.equals('bio')}" value="bio">책소개 내용으로 검색</option>
+                </select>
+                <input th:value="${bookSearch != null && bookSearch.searchParam != null} ? ${bookSearch.searchParam.keyword} : ''" id="search-keyword" class="form-control me-2" name="keyword" type="search" placeholder="Search" aria-label="Search">
+                <button id="header-search-btn" class="btn btn-outline-success" type="submit">Search</button>
+            </div>
+        </div>
+    </div>
+</header>
+</html>

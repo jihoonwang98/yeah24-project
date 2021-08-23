@@ -1,0 +1,34 @@
+.link-unstyled {
+    text-decoration: none;
+    color: black;
+}
+
+.link-unstyled:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+.side-bar-category-top {
+    display: inline-block;
+    color: white;
+    width: 178px;
+    padding: 20px 40px 20px 10px !important;
+    border: solid 1px #5790c7;
+    border-bottom: solid 1px #196ab3;
+    background-color: #6699cc;
+}
+
+.side-bar-category-container {
+    text-align: left;
+    color: #555;
+    border: 1px solid #6699CC;
+    color: #6699CC;
+}
+
+.side-bar-category-list {
+    width: 178px;
+    border-top: none;
+    background-color: #fff;
+    line-height: 60px;
+    padding-left: 11px !important;
+}

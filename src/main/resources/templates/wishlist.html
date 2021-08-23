@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<head>
+    <style>
+        .line-height {
+            line-height: 2.2em;
+        }
+
+        .link-unstyled {
+            text-decoration: none;
+            color: black;
+        }
+
+        .link-unstyled:hover {
+            text-decoration: underline;
+            color: black;
+        }
+    </style>
+</head>
+
+<div layout:fragment="contents">
+    <h2 class="fw-bold d-inline-block mb-4 ps-5 pe-5 pt-5">회원 정보</h2>
+    <div class="d-flex align-items-center p-5 border border-2 rounded ms-5" th:with="user= ${bookWishlistResponse.user}">
+        <div class="d-flex flex-column">
+            <div>
+                <img th:if="${user.profileImg == null}" width="150px" height="150px" class="rounded-circle"
+                     th:src="@{/img/no-image.jpg}">
+
+                <img th:if="${user.profileImg != null}" width="150px" height="150px" class="rounded-circle"
+                     th:src="@{/display(imgSrc=${user.profileImg})}">
+            </div>
+        </div>
+
+        <div class="container ms-4">
+            <span class="h5">닉네임 <span class="fw-bold" th:text="${user.nickname}">박성우</span></span>
+            <br>
+        </div>
+    </div>
+
+
+    <div class="ps-5 pe-5 pt-5">
+        <h4 style="line-height: 4em;">Wishlist 목록</h4>
+    </div>
+    <div class="d-flex pt-3 ps-5 pe-5 pb-5" th:each="book: ${bookWishlistResponse.books}">
+        <div class="d-flex align-items-center p-5 border rounded">
+            <div class="d-flex flex-column">
+                <div>
+                    <img th:if="${book.imgSrc == null}" width="150px" height="150px"
+                         th:src="@{/img/no-image.jpg}">
+
+                    <img th:if="${book.imgSrc != null}" width="150px" height="150px"
+                         th:src="@{/display(imgSrc=${book.imgSrc})}">
+                </div>
+            </div>
+
+            <div class="container-fluid ms-4 line-height">
+                <span class="h5">이름 <a th:href="@{/books/{bookId}(bookId=${book.id})}" class="fw-bold link-unstyled" th:text="${book.name}">초보자를 위한 유니티 입문</a></span><br>
+                <span class="h5">출판일 <span class="fw-bold" th:text="${#temporals.format(book.publicationDate, 'yyyy-MM-dd')}">2019-04-01</span></span><br>
+                <span class="h5">정가 <span class="fw-bold" th:text="${book.price}">28000원</span></span><br>
+                <span class="h5">isbn <span class="fw-bold" th:text="${book.isbn}">1162241659</span></span><br>
+            </div>
+
+            <div th:if="${myself != null}">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="remove-book" th:value="${book.id}" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">삭제</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <button th:if="${myself != null && bookWishlistResponse.books.size() > 0}" id="remove-wishlist-btn" class="btn btn-info ms-5 mb-5">Wishlist 삭제</button>
+</div>
+
+
+<script th:inline="javascript" layout:fragment="myScript">
+    $('#remove-wishlist-btn').click(function () {
+        let bookIds = [];
+        let userId = [[${userId}]];
+
+        $('input[name="remove-book"]:checked').each(function (index) {
+            bookIds.push($(this).val());
+        })
+
+        if(bookIds.length === 0) {
+            alert('삭제할 도서를 선택해주세요..');
+            return;
+        }
+
+        console.log(bookIds);
+
+
+        $.ajax({
+            type: 'delete',
+            url: '/api/users/' + userId + '/wishlist',
+            data: JSON.stringify(bookIds),
+            contentType: 'application/json; charset=UTF-8',
+            dataType: 'text',
+            success: function (data) {
+                alert('wishlist 삭제 완료.');
+                window.location.href = '/users/' + userId + '/wishlist';
+            },
+            error: function (err) {
+                alert('wishlist 삭제 오류');
+                console.log(err);
+            }
+        });
+    })
+</script>
+</html>

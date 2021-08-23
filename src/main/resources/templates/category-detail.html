@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<head>
+    <style>
+        .category-container {
+            border: 1px solid #6699CC;
+            color: #6699CC;
+        }
+
+        .list-inline-item {
+            margin-top: 13px;
+        }
+
+        .card {
+            margin-top: 30px;
+        }
+
+        .link-hover {
+            text-decoration: none;
+        }
+
+        .link-hover:hover{
+            text-decoration: underline;
+        }
+
+        .gray-text {
+            color: #999999;
+        }
+
+        .emphasize {
+            font-weight: bolder;
+            font-size: 1.5em;
+        }
+
+        .line-height {
+            line-height: 1em;
+        }
+
+        .review-count {
+            color: #0d6efd;
+        }
+
+        .black-color {
+            color: black;
+        }
+
+        .card-text {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            /* 여러 줄 자르기 추가 스타일 */
+            white-space: normal;
+            line-height: 1.2;
+            height: 3.6em;
+            text-align: left;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .paging-container {
+            margin-top: 20px;
+            padding-left: 15px;
+            border: 1px solid #6699CC;
+        }
+
+        .pagination{
+            color: #6699CC;
+            margin-bottom: 5px;
+        }
+
+        .blue-color {
+            color: #6699CC;
+        }
+    </style>
+</head>
+
+
+<div class="p-5" layout:fragment="contents" th:with="category=${bookListResponse.category}, page=${bookListResponse.pageResult}">
+    <!--<div>
+        <p th:text="'orderBy: '+ ${pageRequest.orderBy}"></p>
+        <p th:text="'id: ' + ${id}"></p>
+        <p th:text="'totalPages: ' + ${page.totalPages}"></p>
+        <p th:text="'totalElements: ' + ${page.totalElements}"></p>
+        <p th:text="'page: ' + ${page.page}"></p>
+        <p th:text="'size: ' + ${page.size}"></p>
+        <p th:text="'startPage: ' + ${page.startPage}"></p>
+        <p th:text="'endPage: ' + ${page.endPage}"></p>
+        <p th:text="'prevBtn: ' + ${page.prevBtn}"></p>
+        <p th:text="'nextBtn: ' + ${page.nextBtn}"></p>
+    </div>-->
+
+    <h2 class="mb-4" th:text="${category.name}">소설/시/희곡</h2>
+    <div th:if="${category.children != null && !category.children.isEmpty()}" class="container-fluid category-container">
+        <ul class="list-unstyled list-inline">
+            <li th:each="childCategory: ${category.children}" class="list-inline-item">
+                <a class="link-info link-hover" th:href="@{/categories/{cateId}/books(cateId=${childCategory.id})}" th:text="${childCategory.name}">한국소설</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="paging-container">
+        <div class="d-flex justify-content-between align-items-center">
+            <ul class="list-unstyled list-inline">
+                <li class="list-inline-item"
+                    th:classappend="${pageRequest.orderBy == null || pageRequest.orderBy.isEmpty() || pageRequest.orderBy.equals('null')} ? 'text-decoration-underline'">
+                    <a class="blue-color link-hover"
+                       th:href="@{/categories/{id}/books(id=${id}, size=${pageRequest.size})}">기본순</a>
+                </li>
+
+                <li class="list-inline-item"
+                    th:classappend="${pageRequest.orderBy != null && pageRequest.orderBy.equals('price')} ? 'text-decoration-underline'">
+                    <a class="blue-color link-hover"
+                       th:href="@{/categories/{id}/books(id=${id}, size=${pageRequest.size}, orderBy='price')}">최저가순</a>
+                </li>
+
+                <li class="list-inline-item"
+                    th:classappend="${pageRequest.orderBy != null && pageRequest.orderBy.equals('new')} ? 'text-decoration-underline'">
+                    <a class="blue-color link-hover"
+                       th:href="@{/categories/{id}/books(id=${id}, size=${pageRequest.size}, orderBy='new')}">신상품순</a>
+                </li>
+
+            </ul>
+
+            <div class="d-flex">
+                <select class="form-select me-3" aria-label=".form-select-sm example"
+                        name="size"
+                        onchange="changePageSizeListenerFunction()"
+                        id="page-size-select">
+                    <option th:selected="${pageRequest.size == null || pageRequest.size == 3}" value="3">3개씩 보기</option>
+                    <option th:selected="${pageRequest.size == 6}" value="6">6개씩 보기</option>
+                </select>
+            </div>
+        </div>
+
+        <ul th:if="${page.totalPages != 0}" class="pagination">
+            <!--<li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>-->
+
+
+            <li class="page-item"
+                th:if="${page.prevBtn}">
+                <a class="page-link"
+                   th:href="@{/categories/{id}/books(id=${id},
+                                               page=${(page.startPage)-1},
+                                               size=${pageRequest.size},
+                                               orderBy=${pageRequest.orderBy})}"
+                   aria-label="Next">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+
+            <li class="page-item"
+                th:each="num: ${#numbers.sequence(page.startPage, page.endPage)}"
+                th:classappend="(${page.page} == ${num}) ? 'active': ''">
+                <a class="page-link" th:href="@{/categories/{id}/books(id=${id},
+                                                                page=${num},
+                                                                size=${pageRequest.size},
+                                                                orderBy=${pageRequest.orderBy})}">[[${num}]]</a>
+            </li>
+
+
+            <li class="page-item"
+                th:if="${page.nextBtn}">
+                <a class="page-link"
+                   th:href="@{/categories/{id}/books(id=${id},
+                                               page=${page.endPage+1},
+                                               size=${pageRequest.size},
+                                               orderBy=${pageRequest.orderBy})}"
+                   aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+
+            <!--<li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>-->
+        </ul>
+
+    </div>
+
+
+
+    <div th:each="book: ${bookListResponse.books}" class="card d-flex flex-row align-items-center">
+        <div class="p-4">
+            <img th:if="${book.imgSrc != null}" th:src="@{/display(imgSrc=${book.imgSrc})}" width="130px">
+            <img th:if="${book.imgSrc == null}" th:src="@{/img/no-image.jpg}" width="130px">
+        </div>
+        <div class="card-body">
+            <div th:classappend="${book.stockQuantity == 0} ? 'text-decoration-line-through' : ''">
+                <h5 class="card-title">
+                    <a class="link-dark link-hover" th:href="@{/books/{bookId}(bookId=${book.id})}" th:text="${book.name}">오늘 밤, 세계에서 이 사랑이 사라진다 해도</a>
+                </h5>
+                <p class="book-info">
+                <span class="gray-text">
+                    <a th:each="author, iStat: ${book.authors}" th:text="${#strings.concat(author.name, (iStat.last ? '' : ', '))}" th:href="@{/authors/{authorId}(authorId=${author.id})}" class="link-dark link-hover">
+                        이치조 마사키
+                    </a>
+                    저 | <span th:text="${#temporals.format(book.publicationDate, 'yyyy년 MM월')}">2021년 06월</span>
+                </span>
+                <p class="line-height">
+                    <span th:text="${book.price}" class="emphasize">12,600</span>원
+                </p>
+                <p class="line-height">
+                    <span class="gray-text">
+                        회원리뷰(<span class="review-count" th:text="${book.review != null} ? ${book.review.reviewCount} : '0'">12</span>건)
+                        <span class="black-color">별점 <span class="emphasize" th:text="${book.review != null} ? ${#numbers.formatDecimal(book.review.avgRating, 1, 1)} : '0.0'">9.5</span></span>
+                    </span>
+                </p>
+                <p class="line-height pt-1 pb-1">
+                    재고: <span th:text="${book.stockQuantity}"></span>권
+                </p>
+                </p>
+                <p class="card-text" th:text="${book.bio}">
+                </p>
+            </div>
+
+            <div class="mt-4 h3">
+                <span th:if="${book.stockQuantity == 0}" style="color: red">품절입니다.</span>
+            </div>
+
+        </div>
+
+        <div>
+            <div class="form-check p-3 m-3">
+                <input class="form-check-input" type="checkbox" name="bookId" th:value="${book.id}" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">Check</label>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${page.totalPages == 0}" class="p-5">
+        <h3>등록된 도서가 없습니다..</h3>
+    </div>
+
+
+    <div th:if="${#authorization.expr('isAuthenticated()') && page.totalPages != 0}" class="mt-5">
+        <input type="hidden" id="userId" th:value="${#authentication.principal.user.id}" />
+        <button id="add-to-wishlist-btn" class="btn btn-info">wishlist에 일괄 추가하기</button> <br/>
+        <button id="add-to-cart-btn" class="btn btn-success mt-3">장바구니에 일괄 추가하기</button>
+    </div>
+</div>
+
+
+<script th:inline="javascript" layout:fragment="myScript">
+
+    function changePageSizeListenerFunction() {
+        let size = $("#page-size-select").val();
+        let orderBy = [[${pageRequest.orderBy}]];
+        location.href = "/categories/[[${id}]]?size=" + size + "&orderBy=" + orderBy;
+    }
+
+    $('#add-to-wishlist-btn').click(function () {
+
+        let bookIds = [];
+        let userId = $('#userId').val();
+
+
+        $('input[name="bookId"]:checked').each(function (index) {
+            bookIds.push($(this).val());
+        })
+
+        console.log(bookIds);
+        console.log(userId);
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/users/' + userId +'/wishlist',
+            dataType: 'text',
+            data: JSON.stringify(bookIds),
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){
+                alert('wishlist에 추가 완료');
+                window.location.href = '/users/' + userId + '/wishlist';
+            },
+            error: function(err){
+                alert('wishlist에 추가 중 에러 발생');
+                console.log(err);    //에러가 발생하면 콘솔 로그를 찍어준다.
+            }
+        });
+    })
+
+
+    $('#add-to-cart-btn').click(function () {
+
+        let bookIds = [];
+
+        $('input[name="bookId"]:checked').each(function (index) {
+            bookIds.push($(this).val());
+        })
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/cart',
+            dataType: 'text',
+            data: JSON.stringify(bookIds),
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){
+                alert('장바구니에 추가 완료');
+                window.location.href = '/cart';
+            },
+            error: function(err){
+                alert('장바구니에 추가 중 에러 발생');
+                console.log(err);    //에러가 발생하면 콘솔 로그를 찍어준다.
+            }
+        });
+    })
+
+
+</script>
+</html>

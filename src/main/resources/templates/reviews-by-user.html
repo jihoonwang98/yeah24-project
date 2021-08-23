@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<head>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+</head>
+<style layout:fragment="myCss">
+    .link-unstyled {
+        text-decoration: none;
+        color: black;
+    }
+
+    .link-unstyled:hover {
+        text-decoration: underline;
+        color: black;
+    }
+</style>
+
+
+<div class="p-5" layout:fragment="contents" th:with="reviews=${reviewByUserDTO.reviews}, user=${reviewByUserDTO.user}">
+    <div class="pb-5">
+        <h1>회원이 쓴 리뷰 목록 페이지</h1>
+    </div>
+
+
+    <h2 class="fw-bold d-inline-block mb-4">회원 정보</h2>
+    <div class="d-flex align-items-center p-5 border border-2 rounded">
+        <div class="d-flex flex-column">
+            <div>
+                <img th:if="${user.profileImg == null}" width="150px" height="150px" class="rounded-circle"
+                     th:src="@{/img/no-image.jpg}">
+
+                <img th:if="${user.profileImg != null}" width="150px" height="150px" class="rounded-circle"
+                     th:src="@{/display(imgSrc=${user.profileImg})}">
+            </div>
+        </div>
+
+        <div class="container ms-4">
+            <span class="h5">닉네임 <span class="fw-bold" th:text="${user.nickname}">박성우</span></span>
+            <br>
+        </div>
+    </div>
+
+
+    <h2 class="mt-5 fw-bold">회원 리뷰
+        <span th:text="'(' + ${reviewByUserDTO.count} + '건)'">(3건)</span>
+    </h2>
+
+    <th:block th:if="${reviewByUserDTO.count != 0}">
+        <h5>평균 별점:
+            <span style="line-height: 3em;" th:text="${#numbers.formatDecimal(reviewByUserDTO.avgRating, 1, 1)}"></span>
+        </h5>
+
+        <div class="card mb-5" th:each="review: ${reviews}">
+            <div class="card-body">
+                <p class="card-text">
+                <div class="d-flex align-items-center">
+                    <div class="container ms-4">
+                        <span class="h5">별점</span>
+                        <span class="fw-bold" th:text="${#numbers.formatDecimal(review.rating, 1, 1)}">5.0</span>
+                        <span>
+                                <th:block th:if="${review.rating == 0.0}">
+                                    <i class="icon-star-empty"></i>
+                                </th:block>
+
+                                <th:block th:if="${review.rating != 0.0}">
+                                    <th:block th:each="num: ${#numbers.sequence(1, #numbers.formatInteger(review.rating, 1, 'NONE'))}">
+                                        <i class="icon-star"></i>
+                                    </th:block>
+                                    <th:block th:if="${(review.rating - T(Math).floor(review.rating)) == 0.5}">
+                                        <i class="icon-star-half-empty"></i>
+                                    </th:block>
+                                </th:block>
+                            </span>
+                        <br>
+                        <p class="pt-3">
+                        <h5 class="d-inline">제목</h5>
+                        <a th:href="@{/books/{id}(id=${review.bookId})}" class="d-inline fw-bold link-unstyled h5" th:text="${review.name}">리뷰 제목</a>
+                        </p>
+
+                        <p class="pt-3">
+                        <h5>내용</h5>
+                        <span th:text="${review.content}">믿고 보는 윤성희 작가! 어느 밤과 아무도 미워하지 않는 밤이 너무 좋았습니다.</span>
+                        </p>
+                    </div>
+                </div>
+                </p>
+            </div>
+        </div>
+    </th:block>
+</div>
+
+
+<script layout:fragment="myScript">
+</script>
+</html>

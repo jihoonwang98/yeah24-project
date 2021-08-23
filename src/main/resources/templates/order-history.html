@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<style layout:fragment="myCss">
+    .list-inline-item {
+        margin-top: 13px;
+    }
+
+    .paging-container {
+        margin-top: 20px;
+        padding-left: 15px;
+        border: 1px solid #6699CC;
+    }
+
+    .pagination{
+        color: #6699CC;
+        margin-bottom: 5px;
+    }
+
+    .blue-color {
+        color: #6699CC;
+    }
+
+    .link-hover {
+        text-decoration: none;
+    }
+
+    .link-hover:hover{
+        text-decoration: underline;
+    }
+</style>
+
+
+<div class="ps-4 pt-4 pe-4 w-100"  layout:fragment="contents">
+
+    <h2>주문 내역 페이지</h2>
+    <div class="paging-container mb-5 mt-5">
+        <div class="d-flex justify-content-between align-items-center">
+            <ul class="list-unstyled list-inline me-5">
+                <li class="list-inline-item"
+                    th:classappend="${pageRequest.orderBy == null || pageRequest.orderBy.isEmpty() || pageRequest.orderBy.equals('null')} ? 'text-decoration-underline'">
+                    <a class="blue-color link-hover"
+                       th:href="@{/users/{id}/orders(id=${id}, size=${pageRequest.size}, status=${status})}">최근순</a>
+                </li>
+
+                <li class="list-inline-item"
+                    th:classappend="${pageRequest.orderBy != null && pageRequest.orderBy.equals('past')} ? 'text-decoration-underline'">
+                    <a class="blue-color link-hover"
+                       th:href="@{/users/{id}/orders(id=${id}, size=${pageRequest.size}, orderBy='past', status=${status})}">과거순</a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center">
+                <div>
+                    <span class="d-inline-block" style="width: 80px !important;">주문상태</span>
+                </div>
+                <select class="form-select me-3" aria-label=".form-select-sm example"
+                        name="order-status"
+                        onchange="changeOrderStatusListenerFunction()"
+                        id="order-status-select">
+                    <option th:selected="${status == null || status.equals('all')}" value="all">전체</option>
+                    <option th:selected="${status != null && status.equals('order')}" value="order">주문완료</option>
+                    <option th:selected="${status != null && status.equals('cancel')}" value="cancel">주문취소</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+            <ul th:if="${response.pageResult.totalPages != 0}"  class="pagination" th:with="page=${response.pageResult}">
+                <!--<li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>-->
+
+
+                <li class="page-item"
+                    th:if="${page.prevBtn}">
+                    <a class="page-link"
+                       th:href="@{/users/{id}/orders(id=${id},
+                                               page=${(page.startPage)-1},
+                                               size=${pageRequest.size},
+                                               orderBy=${pageRequest.orderBy},
+                                               status=${status})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+
+
+                <li class="page-item"
+                    th:each="num: ${#numbers.sequence(page.startPage, page.endPage)}"
+                    th:classappend="(${page.page} == ${num}) ? 'active': ''">
+                    <a class="page-link" th:href="@{/users/{id}/orders(id=${id},
+                                                                page=${num},
+                                                                size=${pageRequest.size},
+                                                                orderBy=${pageRequest.orderBy},
+                                                                status=${status})}"
+                    th:text="${num}">1</a>
+                </li>
+
+
+                <li class="page-item"
+                    th:if="${page.nextBtn}">
+                    <a class="page-link"
+                       th:href="@{/users/{id}/orders(id=${id},
+                                               page=${page.endPage+1},
+                                               size=${pageRequest.size},
+                                               orderBy=${pageRequest.orderBy},
+                                               status=${status})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+
+                <!--<li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>-->
+            </ul>
+
+            <div class="me-3">
+                <select class="form-select me-3" aria-label=".form-select-sm example"
+                        name="size"
+                        onchange="changePageSizeListenerFunction()"
+                        id="page-size-select">
+                    <option th:selected="${pageRequest.size == null || pageRequest.size == 3}"  value="3">3개씩 보기</option>
+                    <option th:selected="${pageRequest.size == 6}" value="6">6개씩 보기</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-hover mb-5">
+        <thead>
+        <tr>
+            <th scope="col">주문번호</th>
+            <th scope="col">주문일자</th>
+            <th scope="col">주문내역</th>
+            <th scope="col">주문금액/수량</th>
+            <th scope="col">주문상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order: ${response.orders}">
+            <th scope="row" th:text="${order.orderId}">Y0280738410</th>
+            <td th:text="${#temporals.format(order.orderDate, 'yyyy.MM.dd')}">2021.07.21</td>
+            <td>
+                <a class="link-hover blue-color" th:href="@{/users/{userId}/orders/{orderId}(userId=${id}, orderId=${order.orderId})}" th:text="${order.orderBookName} + (${order.orderBookCount >= 2} ? (' 외 ' + ${order.orderBookCount - 1} + '종') : '')">신화 콘서트 : 통으로 읽는 세계 7대 신화</a>
+            </td>
+            <td th:text="${#numbers.formatInteger(order.totalOrderPrice, 3, 'COMMA')} + '원 / ' + ${order.totalAmount} + '권'">14,850/1</td>
+            <td th:text="${order.status == T(com.prac.domain.etc.OrderStatus).ORDER} ? '주문완료' : '주문취소'">주문완료</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script th:inline="javascript" layout:fragment="myScript">
+    function changePageSizeListenerFunction() {
+        let size = $("#page-size-select").val();
+        let orderBy = [[${pageRequest.orderBy}]];
+        let status = [[${status}]];
+        location.href = "/users/[[${id}]]/orders?size=" + size + "&orderBy=" + orderBy + "&status=" + status;
+    }
+
+    function changeOrderStatusListenerFunction() {
+        let size = [[${pageRequest.size}]];
+        let orderBy = [[${pageRequest.orderBy}]];
+        let status = $("#order-status-select").val();
+        location.href = "/users/[[${id}]]/orders?size=" + size + "&orderBy=" + orderBy + "&status=" + status;
+    }
+
+
+</script>
+</html>

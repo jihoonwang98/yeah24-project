@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<style layout:fragment="myCss">
+    .order-cancel-deco {
+        font-weight: bold;
+        text-decoration: underline;
+        color: red;
+    }
+</style>
+
+
+<div class="ps-4 pt-4 pe-4 w-100" layout:fragment="contents">
+    <h2 class="text-center">주문 상세 조회 페이지</h2>
+
+    <h4 class="d-inline-block fw-bold mt-5">주문 상품 정보</h4>
+    <span class="d-inline-block ms-3">주문번호: <span th:text="${response.orderId}" style="color: #0b5ed7">Y0280738410</span></span>
+
+    <table class="table table-bordered table-hover mt-2 mb-2">
+        <thead>
+        <tr>
+            <th scope="col">상품명</th>
+            <th scope="col">주문 수량</th>
+            <th scope="col">가격</th>
+            <th scope="col">합계 금액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order: ${response.orders}">
+            <td th:text="${order.bookName}">신화 콘서트 : 통으로 읽는 세계 7대 신화</td>
+            <td th:text="${order.amount} + '권'">1</td>
+            <td th:text="${#numbers.formatInteger(order.price, 3, 'COMMA')} + '원'">14,850원</td>
+            <td th:text="${#numbers.formatInteger(order.price * order.amount, 3, 'COMMA')} + '원'">14,850원</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <h5 class="d-inline-block mt-4">주문 상태: </h5>
+    <span th:class="${response.status == T(com.prac.domain.etc.OrderStatus).CANCEL} ? 'order-cancel-deco'" th:text="${response.status == T(com.prac.domain.etc.OrderStatus).ORDER} ? '주문완료' : '주문취소'"></span>
+    <button th:disabled="${response.status == T(com.prac.domain.etc.OrderStatus).CANCEL}" type="button" id="order-cancel-btn" class="btn btn-info btn-sm ms-4">주문취소</button>
+    <br>
+    <h5 class="d-inline-block mt-4 mb-5">주문 총 금액: </h5> <span th:text="${#numbers.formatInteger(response.totalOrderPrice, 3, 'COMMA')} + '원'">20,960원</span> <br>
+
+
+    <h4 class="d-inline-block fw-bold mt-5">주문 정보</h4>
+
+    <div class="mt-2 border rounded ps-0 pe-0 mb-5">
+        <div class="row border g-0">
+            <div class="col-3 border-end p-3">
+                <div>주문번호</div>
+            </div>
+            <div class="col-9 border-start p-3">
+                <div th:text="${response.orderId}">Y0270631828</div>
+            </div>
+        </div>
+
+        <div class="row border g-0">
+            <div class="col-3 border-end p-3">
+                <div>주문하신 분</div>
+            </div>
+            <div class="col-9 border-start p-3">
+                <div th:text="${response.orderer}">왕지훈</div>
+            </div>
+        </div>
+
+        <div class="row border g-0">
+            <div class="col-3 border-end p-3">
+                <div>주문일자</div>
+            </div>
+            <div class="col-9 border-start p-3">
+                <div th:text="${#temporals.format(response.orderDate, 'yyyy.MM.dd')}">2021.07.15</div>
+            </div>
+        </div>
+
+        <div class="row border g-0">
+            <div class="col-3 border-end p-3">
+                <div>배송지 주소</div>
+            </div>
+            <div class="col-9 border-start p-3">
+                <div th:text="${response.deliveryAddr.fullRoadAddress()}">(01079) 서울특별시 강북구 수유로17가길 4-10,.(수유동)</div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script th:inline="javascript" layout:fragment="myScript">
+
+    $('#order-cancel-btn').click(function () {
+        let userId = [[${userId}]];
+        let orderId = [[${orderId}]];
+
+        $.ajax({
+            url: '/api/orders/' + orderId,
+            method: 'PATCH',
+            dataType: 'text',
+            success: function (data) {
+                alert('주문이 취소되었습니다.')
+                window.location.href = '/users/' + userId + '/orders/' + orderId;
+            },
+            error: function (err) {
+                alert('주문이 취소 중 에러 발생...')
+                console.log(err);
+            }
+        });
+    });
+
+</script>
+</html>

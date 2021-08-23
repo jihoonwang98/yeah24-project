@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<head>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+</head>
+
+<style layout:fragment="myCss">
+
+    .up-btn:hover, .down-btn:hover {
+        cursor: pointer;
+    }
+
+
+</style>
+
+
+<div class="pt-4 ps-3 pe-3" layout:fragment="contents">
+    <input type="hidden" id="userId" >
+    <h2>장바구니 페이지</h2>
+
+    <table class="table table-bordered table-hover align-middle mt-4">
+        <thead>
+        <tr class="table-secondary align-middle">
+            <th class="text-center" scope="col">선택</th>
+            <th class="text-center" scope="col">상품정보</th>
+            <th class="text-center" scope="col">재고수량</th>
+            <th class="text-center" scope="col">선택수량</th>
+            <th class="text-center" scope="col">상품금액</th>
+            <th class="text-center" scope="col">합계금액</th>
+            <th class="text-center" scope="col">삭제</th>
+        </tr>
+        </thead>
+        <tbody class="text-center">
+            <tr th:each="book: ${books}">
+                <input th:id="'price-' + ${book.bookId}" type="hidden" th:value="${book.price}">
+
+                <!-- 선택 -->
+                <td class="p-3">
+                    <input name="checked-book-id" class="form-check-input" type="checkbox" th:value="${book.bookId}" th:disabled="${book.stockQuantity == 0}">
+                </td>
+
+                <!-- 상품정보 -->
+                <td class="p-3" th:classappend="${book.stockQuantity == 0} ? 'text-decoration-line-through' : ''">
+                    <div class="d-flex">
+                        <div class="me-4">
+                            <img th:if="${book.imgSrc == null}" th:src="@{/img/no-image.jpg}" width="120px;">
+                            <img th:if="${book.imgSrc != null}" th:src="@{/display(imgSrc=${book.imgSrc})}" width="120px;">
+                        </div>
+                        <div class="d-flex flex-column text-start">
+                            <div class="mb-3" th:text="${book.name}">
+                                [도서] 우리는 결국 지구를 위한 답을 찾을 것이다 : 지구와의 공존을 모색하는 가장 쉬운 기후 수업
+                            </div>
+                            <div>
+                                <!--<span class="text-decoration-line-through">16,800원</span> <span>15,120원 (10%할인)</span>-->
+                                <span th:text="${book.price} + '원'"></span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <!-- 재고수량 -->
+                <td class="p-3">
+                   <span th:id="'stock-' + ${book.bookId}" th:text="${book.stockQuantity}"></span>권
+                    <div style="color: red" class="h3 mt-3" th:if="${book.stockQuantity == 0}">
+                        품절
+                    </div>
+                </td>
+
+                <!-- 선택수량 -->
+                <td class="p-3">
+                    <!-- "장바구니 수량 변경" -->
+                    <div class="updown d-flex align-items-center">
+                        <div>
+                            <input th:id="'input-' + ${book.bookId}" style="background-color: white;" type="text" name="amount" size="1" class="form-control"
+                                   th:value="${book.stockQuantity == 0} ? 0 : 1"
+                                   readonly>
+                        </div>
+                        <div>
+                            <span><i name="up-btn" class="fas fa-arrow-alt-circle-up up-btn" th:id="'up-btn-' + ${book.bookId}"></i></span>
+                            <span><i name="down-btn" class="fas fa-arrow-alt-circle-down down-btn" th:id="'down-btn-' + ${book.bookId}"></i></span>
+                        </div>
+                    </div>
+                </td>
+                <td class="p-3" th:text="${book.price} + '원'">15,120원</td>
+                <td class="p-3 sum-book" th:id="'sum-' + ${book.bookId}" th:text="${book.price} + '원'">15,120원</td>
+                <td class="p-3">
+                    <div class="d-flex flex-column">
+                        <div class="mt-3 mb-3">
+                            <button th:id="'remove-btn-' + ${book.bookId}" class="btn btn-sm btn-danger btn-remove">삭제하기</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="mt-5">
+        <h4>총 상품금액: <span id="total-price-sum"></span>원</h4>
+    </div>
+
+    <div class="d-flex justify-content-center mt-5 mb-5">
+        <button id="price-calculate-btn" type="button" class="btn btn-dark mb-4 me-4">총 상품금액 계산하기</button>
+        <button id="order-submit-btn" type="button" class="btn btn-info mb-4">선택한 제품 주문하기</button>
+    </div>
+
+</div>
+
+
+<script layout:fragment="myScript">
+
+    function idParse(idVal) {
+        let lastIdx = idVal.lastIndexOf('-');
+        let id = idVal.substring(lastIdx+1);
+        return id;
+    }
+
+    $('i[name="up-btn"]').click(function () {
+        let id = idParse($(this).attr('id'));
+        let price = Number($('#price-' + id).val());
+        let inputVal = Number($('#input-' + id).val());
+        let stockQuantity = Number($('#stock-' + id).text());
+
+        if(stockQuantity == 0) {
+            return;
+        }
+
+        if (inputVal + 1 <= stockQuantity) {
+            $('#input-' + id).val(inputVal + 1);
+        }
+
+        inputVal = Number($('#input-' + id).val());
+
+        $('#sum-' + id).text((inputVal * price) + '원');
+    });
+
+
+
+    $('i[name="down-btn"]').click(function () {
+        let id = idParse($(this).attr('id'));
+        let price = Number($('#price-' + id).val());
+        let inputVal = Number($('#input-' + id).val());
+
+        let stockQuantity = $('#stock-' + id).text();
+
+        if(Number(stockQuantity) == 0) {
+            return;
+        }
+
+        if(inputVal >= 2) {
+            $('#input-' + id).val(inputVal -1);
+        }
+
+        inputVal = Number($('#input-' + id).val());
+
+        $('#sum-' + id).text((inputVal * price) + '원');
+    });
+
+
+    $('#price-calculate-btn').click(function () {
+        let bookIds = [];
+
+        $('input[name="checked-book-id"]:checked').each(function (index) {
+            bookIds.push($(this).val());
+        })
+
+        console.log("checked book ids: " + bookIds);
+
+
+        let priceSum = 0;
+        for (let i = 0; i < bookIds.length; i++) {
+            let bookId = bookIds[i];
+
+            let sum = Number($('#sum-' + bookId).text().substr(0, $('#sum-' + bookId).text().length - 1));
+            console.log("bookId " + bookId + "의 합계금액은 " + sum + " 이다.");
+
+            priceSum += sum;
+        }
+
+        console.log("총 합계금액은 " + priceSum + "이다.");
+
+        $('#total-price-sum').text(priceSum + "");
+    });
+
+
+    $('#order-submit-btn').click(function () {
+        let bookIds = [];
+
+        $('input[name="checked-book-id"]:checked').each(function (index) {
+            bookIds.push($(this).val());
+        })
+
+        if(bookIds.length === 0) {
+            alert('제품을 선택해주세요..');
+            return;
+        }
+
+        let myForm = document.createElement("form");
+        myForm.setAttribute("charset", "UTF-8");
+        myForm.setAttribute("method", "GET");  //Post 방식
+        myForm.setAttribute("action", "/orders"); //요청 보낼 주소
+
+
+        for (let i = 0; i < bookIds.length; i++) {
+            let bookId = bookIds[i];
+            let amount = Number($('#input-' + bookId).val());
+            let priceSum = Number($('#sum-' + bookId).text().substr(0, $('#sum-' + bookId).text().length - 1));
+
+            console.log("bookId: " + bookId);
+            console.log("amount: " + amount);
+            console.log("priceSum: " + priceSum);
+
+            let fieldId = document.createElement("input");
+            fieldId.setAttribute("type", "hidden");
+            fieldId.setAttribute("name", "books[" + i + "].bookId");
+            fieldId.setAttribute("value", bookId);
+
+
+            let fieldAmount = document.createElement("input");
+            fieldAmount.setAttribute("type", "hidden");
+            fieldAmount.setAttribute("name", "books[" + i + "].amount");
+            fieldAmount.setAttribute("value", amount + "");
+
+
+            let fieldPrice = document.createElement("input");
+            fieldPrice.setAttribute("type", "hidden");
+            fieldPrice.setAttribute("name", "books[" + i + "].priceSum");
+            fieldPrice.setAttribute("value", priceSum + "");
+
+
+            myForm.appendChild(fieldId);
+            myForm.appendChild(fieldAmount);
+            myForm.appendChild(fieldPrice);
+        }
+
+
+        document.body.appendChild(myForm);
+        myForm.submit();
+    });
+
+
+    $('.btn-remove').click(function () {
+        let id = idParse($(this).attr('id'));
+        console.log("btn-remove book ID: " + id);
+
+        $.ajax({
+            url: '/api/cart',
+            method: 'DELETE',
+            data: JSON.stringify(id),
+            contentType: 'application/json; charset=UTF-8',
+            dataType: 'text',
+            success: function (data) {
+                alert('장바구니에서 삭제 완료')
+            },
+            error: function (err) {
+                alert('장바구니에서 삭제 중 에러 발생')
+            }
+        });
+
+        window.location.href = '/cart';
+    });
+</script>
+</html>

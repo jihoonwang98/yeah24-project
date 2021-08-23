@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/basic-layout}"
+>
+
+<head>
+    <style>
+        .line-height {
+            line-height: 2.2em;
+        }
+
+        .link-unstyled {
+            text-decoration: none;
+            color: black;
+        }
+
+        .link-unstyled:hover {
+            text-decoration: underline;
+            color: black;
+        }
+    </style>
+</head>
+
+
+<div layout:fragment="contents">
+    <div class="p-5">
+        <h1>저자 소개 페이지</h1>
+    </div>
+
+    <div class="d-flex align-items-center p-5 m-5 border border-2 rounded">
+        <div class="d-flex flex-column">
+            <div>
+                <img th:if="${authorDetailDTO.imgSrc == null}" width="150px" height="150px" class="rounded-circle"
+                     th:src="@{/img/no-image.jpg}">
+
+                <img th:if="${authorDetailDTO.imgSrc != null}" width="150px" height="150px" class="rounded-circle"
+                     th:src="@{/display(imgSrc=${authorDetailDTO.imgSrc})}">
+            </div>
+        </div>
+
+        <div class="container ms-4">
+            <span class="h5">이름 <span class="fw-bold" th:text="${authorDetailDTO.name}">박성우</span></span>
+            <br>
+            <p>
+            <h5 style="line-height: 3em;">소개</h5>
+            <span th:text="${authorDetailDTO.bio}">1971년 전북 정읍에서 태어났습니다. 원광대 문예창작학과를 졸업하고 같은 대학원 박사과정을 수료했다. 2000년 중앙일보 신춘문예에 시 「거미」가 당선되고, 2006년 한국일보 신춘문예에 동시가 당선되며 아동문학을, 2009년 한국간행물윤리위원회 청소년저작 및 출판 지원사업에 청소년시가 당선되면서 청소년문학을 시작했습니다. 걷는 것을 좋아하는 시인이다. 책을 통해 독자들의 마음에 한 발짝 더 다가서고 싶습니다.
+
+            시집 『거미』, 『가뜬한 잠』, 『웃는 연습』, 『자두나무 정류장』, 동시집 『불량 꽃게』, 『우리 집 한 바퀴』, 『동물 학교 한 바퀴』, 『박성우 시인의 첫말 잇기 동시집』, 『박성우 시인의 끝말잇기 동시집』, 『삼행시의 달인』, 청소년시집 『난 빨강』, 『사과가 필요해』, 그림책 『암흑 식당』, 『소나기 놀이터』, 『나의 씨앗 할아버지』, 어린이책 「아홉 살 사전」 시리즈, 청소년책 「사춘기 사전」 시리즈, 어른을 위한 동화 『컵 이야기』, 산문집 『박성우 시인의 창문 엽서』, 『마음 곁에 두는 마음』, 청소년 시집 『난 빨강』 등을 냈습니다. 신동엽문학상, 윤동주젊은작가상, 백석문학상 등을 받았습니다.
+            </span></p>
+        </div>
+    </div>
+    <div class="ps-5 pe-5 pt-5">
+        <hr>
+        <h4 style="line-height: 4em;">저서 목록</h4>
+    </div>
+    <div class="d-flex pt-3 ps-5 pe-5 pb-5" th:each="book: ${authorDetailDTO.books}">
+        <div class="d-flex align-items-center p-5 border rounded">
+            <div class="d-flex flex-column">
+                <div>
+                    <img th:if="${book.imgSrc == null}" width="150px" height="150px"
+                         th:src="@{/img/no-image.jpg}">
+
+                    <img th:if="${book.imgSrc != null}" width="150px" height="150px"
+                         th:src="@{/display(imgSrc=${book.imgSrc})}">
+                </div>
+            </div>
+
+            <div class="container ms-4 line-height">
+                <span class="h5">이름 <a th:href="@{/books/{bookId}(bookId=${book.id})}" class="fw-bold link-unstyled" th:text="${book.name}">초보자를 위한 유니티 입문</a></span><br>
+                <span class="h5">출판일 <span class="fw-bold" th:text="${#temporals.format(book.publicationDate, 'yyyy-MM-dd')}">2019-04-01</span></span><br>
+                <span class="h5">정가 <span class="fw-bold" th:text="${book.price}">28000원</span></span><br>
+                <span class="h5">isbn <span class="fw-bold" th:text="${book.isbn}">1162241659</span></span><br>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script layout:fragment="myScript">
+</script>
+</html>

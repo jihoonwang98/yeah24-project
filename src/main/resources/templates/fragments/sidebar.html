@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="sidebarFragment" class="side-bar-category-container">
+  <span class="side-bar-category-top">카테고리</span>
+  <ul class="side-bar-category-list list-unstyled">
+    <li th:each="category: ${parents.get('categories')}">
+      <a class="link-unstyled" th:href="@{/categories/{cateId}/books(cateId = ${category.id})}" th:text="${category.name}"></a>
+    </li>
+  </ul>
+</div>
