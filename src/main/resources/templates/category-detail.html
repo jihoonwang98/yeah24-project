@@ -262,7 +262,7 @@
     function changePageSizeListenerFunction() {
         let size = $("#page-size-select").val();
         let orderBy = [[${pageRequest.orderBy}]];
-        location.href = "/categories/[[${id}]]?size=" + size + "&orderBy=" + orderBy;
+        location.href = "/categories/[[${id}]]/books?size=" + size + "&orderBy=" + orderBy;
     }
 
     $('#add-to-wishlist-btn').click(function () {
