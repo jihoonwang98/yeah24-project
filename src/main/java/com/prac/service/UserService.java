@@ -2,8 +2,6 @@ package com.prac.service;
 
 import com.prac.domain.Book;
 import com.prac.domain.User;
-import com.prac.dto.BookDTO;
-import com.prac.dto.BookDTO.BookWishlistDTO;
 import com.prac.dto.BookDTO.BookWishlistResponse;
 import com.prac.dto.UserDTO.UserDetailDTO;
 import com.prac.dto.UserDTO.UserModifyDTO;
@@ -11,10 +9,8 @@ import com.prac.dto.UserDTO.UserRegisterDTO;
 
 import com.prac.repository.book.BookRepository;
 import com.prac.repository.user.UserRepository;
-import com.prac.utils.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +22,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -46,8 +41,7 @@ public class UserService {
         String imgSrc = null;
 
         if(!profileImg.isEmpty()) {
-            imgSrc = getImgSrc(profileImg);
-            uploadImage(profileImg, imgSrc);
+            imgSrc = uploadImage(profileImg, getFileDir());
         }
 
         User user = registerDTO.toEntity(imgSrc);
@@ -67,8 +61,7 @@ public class UserService {
         String imgSrc = null;
 
         if (profileImg != null) {
-            imgSrc = getImgSrc(profileImg);
-            uploadImage(profileImg, imgSrc);
+            imgSrc = uploadImage(profileImg, getFileDir());
         }
 
         User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
@@ -105,18 +98,16 @@ public class UserService {
     }
 
 
-    private void uploadImage(MultipartFile profileImg, String imgSrc) {
+    private String uploadImage(MultipartFile profileImg, String imgSrc) {
         try {
-            uploadService.upload(profileImg, imgSrc);
+            return uploadService.upload(profileImg, imgSrc);
         } catch (IOException e) {
             log.error("IOException in register", e);
         }
+        return null;
     }
 
-    private String getImgSrc(MultipartFile profileImg) {
-        String folderPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")).replace("/", File.separator);
-        String uuid = UUID.randomUUID().toString();
-        String fileName = profileImg.getOriginalFilename();
-        return folderPath + File.separator + uuid + "_" + fileName;
+    private String getFileDir() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")).replace("/", File.separator);
     }
 }
