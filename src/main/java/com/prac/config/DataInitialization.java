@@ -199,7 +199,7 @@ public class DataInitialization implements CommandLineRunner {
                     .price(60000)
                     .stockQuantity(20)
                     .publicationDate(LocalDate.of(2019, 2, 20))
-                    .imgSrc("2021\\08\\07\\retro-unity.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/retro-unity.jfif")
                     .build();
 
             books.add(b2);
@@ -221,7 +221,7 @@ public class DataInitialization implements CommandLineRunner {
                     .publicationDate(LocalDate.of(2019, 4,1))
                     .stockQuantity(15)
                     .price(28000)
-                    .imgSrc("2021\\08\\07\\unity-beginner.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/unity-beginner.jfif")
                     .build();
 
             books.add(b3);
@@ -242,7 +242,7 @@ public class DataInitialization implements CommandLineRunner {
                     .publicationDate(LocalDate.of(2020, 10,1))
                     .stockQuantity(12)
                     .price(35000)
-                    .imgSrc("2021\\08\\07\\unreal-beginner.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/unreal-beginner.jfif")
                     .build();
 
             books.add(b4);
@@ -266,7 +266,7 @@ public class DataInitialization implements CommandLineRunner {
                     .publicationDate(LocalDate.of(2018, 12,1))
                     .stockQuantity(8)
                     .price(27000)
-                    .imgSrc("2021\\08\\07\\이론과-실전으로-배우는-게임-시나리오.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%9D%B4%EB%A1%A0%EA%B3%BC-%EC%8B%A4%EC%A0%84%EC%9C%BC%EB%A1%9C-%EB%B0%B0%EC%9A%B0%EB%8A%94-%EA%B2%8C%EC%9E%84-%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.jfif")
                     .build();
 
             books.add(b5);
@@ -290,7 +290,7 @@ public class DataInitialization implements CommandLineRunner {
                     .publicationDate(LocalDate.of(2021, 6, 21))
                     .stockQuantity(9)
                     .price(16000)
-                    .imgSrc("2021\\08\\07\\게임-시나리오-기획자의-생각법.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EA%B2%8C%EC%9E%84-%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4-%EA%B8%B0%ED%9A%8D%EC%9E%90%EC%9D%98-%EC%83%9D%EA%B0%81%EB%B2%95.jfif")
                     .build();
 
             books.add(b6);
@@ -318,7 +318,7 @@ public class DataInitialization implements CommandLineRunner {
                     .publicationDate(LocalDate.of(2021, 6, 14))
                     .stockQuantity(5)
                     .price(16800)
-                    .imgSrc("2021\\08\\07\\게임-디자이너를-위한-문서-작성-기술.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EA%B2%8C%EC%9E%84-%EB%94%94%EC%9E%90%EC%9D%B4%EB%84%88%EB%A5%BC-%EC%9C%84%ED%95%9C-%EB%AC%B8%EC%84%9C-%EC%9E%91%EC%84%B1-%EA%B8%B0%EC%88%A0.jfif")
                     .build();
 
             books.add(b7);
@@ -341,7 +341,7 @@ public class DataInitialization implements CommandLineRunner {
                     .publicationDate(LocalDate.of(2021, 1, 14))
                     .stockQuantity(3)
                     .price(18000)
-                    .imgSrc("2021\\08\\07\\게임-디자이너되기.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EA%B2%8C%EC%9E%84-%EB%94%94%EC%9E%90%EC%9D%B4%EB%84%88%EB%90%98%EA%B8%B0.jfif")
                     .build();
 
             books.add(b8);
@@ -365,7 +365,7 @@ public class DataInitialization implements CommandLineRunner {
                     .publicationDate(LocalDate.of(2021, 8, 6))
                     .stockQuantity(15)
                     .price(36000)
-                    .imgSrc("2021\\08\\07\\유니티-모바일-게임-개발-2e.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%9C%A0%EB%8B%88%ED%8B%B0-%EB%AA%A8%EB%B0%94%EC%9D%BC-%EA%B2%8C%EC%9E%84-%EA%B0%9C%EB%B0%9C-2e.jfif")
                     .build();
 
             books.add(b9);
@@ -391,7 +391,7 @@ public class DataInitialization implements CommandLineRunner {
                     .publicationDate(LocalDate.of(2020, 12, 18))
                     .stockQuantity(21)
                     .price(26000)
-                    .imgSrc("2021\\08\\07\\유저를-끌어당기는-모바일-게임-기획.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%9C%A0%EC%A0%80%EB%A5%BC-%EB%81%8C%EC%96%B4%EB%8B%B9%EA%B8%B0%EB%8A%94-%EB%AA%A8%EB%B0%94%EC%9D%BC-%EA%B2%8C%EC%9E%84-%EA%B8%B0%ED%9A%8D.jfif")
                     .build();
 
             books.add(b10);
@@ -413,7 +413,7 @@ public class DataInitialization implements CommandLineRunner {
                     .publicationDate(LocalDate.of(2013, 2, 28))
                     .stockQuantity(28)
                     .price(32000)
-                    .imgSrc("2021\\08\\07\\시작하세요!-Cocos2d-x-프로그래밍.jpg")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%8B%9C%EC%9E%91%ED%95%98%EC%84%B8%EC%9A%94!-Cocos2d-x-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D.jpg")
                     .build();
 
             books.add(b11);
@@ -438,7 +438,7 @@ public class DataInitialization implements CommandLineRunner {
                     .isbn("1185475575")
                     .highestDepthCategory(os)
                     .bio("공룡책")
-                    .imgSrc("2021\\08\\07\\운영체제.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%89%BD%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EB%8A%94-%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.jfif")
                     .build();
 
 
@@ -465,7 +465,7 @@ public class DataInitialization implements CommandLineRunner {
                             "컴퓨터 관련 학과 학생을 대상으로 운영체제의 구조와 원리를 설명한 책이다. 주요 개념은 일상생활의 사례를 통해 쉽게 이해하고, 개념 간의 관계는 다양한 그림과 표로 명확히 정리할 수 있다. 20년 가까이 강의해온 저자의 내공이 고스란히 녹아 있어 복잡하고 어려운 내용이지만 차근차근 공부할 수 있다.\n" +
                             "\n" +
                             "※ 본 도서는 대학 강의용 교재로 개발되었으므로 연습문제 해답은 제공하지 않습니다.")
-                    .imgSrc("2021\\08\\07\\쉽게-배우는-운영체제.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%89%BD%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EB%8A%94-%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C.jfif")
                     .build();
 
             books.add(b13);
@@ -488,7 +488,7 @@ public class DataInitialization implements CommandLineRunner {
                     .bio("나만의 임베디드 운영체제를 만들어 보자.\n" +
                             "\n" +
                             "이 책은 펌웨어 개발 과정을 실시간 운영체제(RTOS)를 만들어 가며 설명한다. 임베디드 운영체제를 개발 환경 구성에서 시작해 최종적으로 RTOS를 만드는 과정(부트로더 제작, 하드웨어 제어, 태스크 간 동기화 등)을 하나하나 추가하며 설명하고 있다. 이렇게 만들어 가는 과정에서 ARM 아키텍처와 운영체제의 핵심 이론을 설명하고 있어 이미 운영체제 이론을 공부한 사람에게는 공부한 내용이 어떻게 다른 방식으로 구현되는지 혹은 어떤 요소가 공통되는지를 알 수 있는 좋은 기회가 될 것이다. 또한 운영체제 이론을 공부하지 않은 사람은 운영체제 이론을 실전으로 공부해 볼 수 있다.")
-                    .imgSrc("2021\\08\\07\\임베디드-OS-개발-프로젝트.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%9E%84%EB%B2%A0%EB%94%94%EB%93%9C-OS-%EA%B0%9C%EB%B0%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8.jfif")
                     .build();
 
             books.add(b14);
@@ -500,7 +500,7 @@ public class DataInitialization implements CommandLineRunner {
                             "『핸즈온 머신러닝 2판』(한빛미디어, 2020)을 포함해서 여러 권의 머신러닝, 딥러닝 책을 우리말로 옮겼고 『Do it! 딥러닝 입문』(이지스퍼블리싱, 2019)을 집필했다.\n" +
                             "\n" +
                             "ML GDE(Machine Learning Google Developer Expert). 기계공학을 전공했지만 졸업 후엔 줄곧 코드를 읽고 쓰는 일을 했다. 블로그(tensorflow.blog)에 글을 쓰고 텐서플로 문서 번역에 기여하면서 소프트웨어와 과학의 경계를 흥미롭게 탐험하고 있다. 『Do it! 딥러닝 입문』(이지스퍼블리싱, 2019)을 집필하고, 『핸즈온 머신러닝(2판)』(한빛미디어, 2020), 『미술관에 GAN 딥러닝 실전 프로젝트』(한빛미디어, 2019), 『파이썬을 활용한 머신러닝 쿡북』(한빛미디어, 2019), 『머신 러닝 교과서 with 파이썬, 사이킷런, 텐서플로』(길벗, 2019), 『파이썬 라이브러리를 활용한 머신러닝』(한빛미디어, 2019), 『케라스 창시자에게 배우는 딥러닝』(길벗, 2018), 『핸즈온 머신러닝』(한빛미디어, 2018), 『텐서플로 첫걸음』(한빛미디어, 2016)을 우리말로 옮겼다.")
-                    .imgSrc("2021\\08\\07\\작가-박해선.jpg")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%9E%91%EA%B0%80-%EB%B0%95%ED%95%B4%EC%84%A0.jpg")
                     .build();
 
 
@@ -521,6 +521,7 @@ public class DataInitialization implements CommandLineRunner {
                             "\n" +
                             "- 베타리더가 함께 만든 입문서\n" +
                             "베타리딩 과정을 통해 입문자에게 적절한 난이도, 분량, 학습 요소 등을 고민하고 반영했다. 어려운 용어와 개념은 한 번 더 풀어 쓰고, 복잡한 설명은 눈에 잘 들어오는 그림으로 풀어 냈다. ‘혼자 공부해본’ 여러 입문자의 마음과 눈높이가 책 곳곳에 반영된 것이 이 책의 가장 큰 장점이다.")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/hongongmachine.jfif")
                     .build();
 
             books.add(b15);
@@ -545,6 +546,7 @@ public class DataInitialization implements CommandLineRunner {
                             "이 책은 개념 한 걸음, 수식 한 걸음 그리고 코딩 한 걸음. 가장 적당한 보폭과 올곧은 방향으로 독자를 딥러닝으로 안내한다. 또한 그래프, 삽화, 도해는 100개가 넘어 추상적인 개념도 쉽고 빠르게 받아들일 수 있다. 프로그램 설치 없이 웹 브라우저에 접속하기만 하면 실습을 바로 시작할 수 있다는 점도 이 책만의 특징이다.\n" +
                             "\n" +
                             "편안하게 이론을 이해한 다음 직접 코딩하며 눈으로 딥러닝 대표 문제 4가지를 정복하니 딥러닝의 교과서로 부족함이 없다. 꼭 짚고 넘어가야 할 개념이나 용어는 본문 중간에 나오는 ‘잠깐! 다음으로 넘어가려면’ 코너와 장 마지막에‘기억 카드’ 코너로 2번 복습하여 학습 효과를 높였다. 『Do it! 딥러닝 입문』과 함께 딥러닝을 빠르게 정면 돌파해 보자.")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/doitdeeplearning.jfif")
                     .build();
 
             books.add(b16);
@@ -569,6 +571,7 @@ public class DataInitialization implements CommandLineRunner {
                             "『핸즈온 머신러닝』은 지능형 시스템을 구축하려면 반드시 알아야 할 머신러닝, 딥러닝 분야 핵심 개념과 이론을 이해하기 쉽게 설명한다. 사이킷런, 케라스, 텐서플로를 이용해 실전에서 바로 활용 가능한 예제로 모델을 훈련하고 신경망을 구축하는 방법을 상세하게 안내한다. 장마다 제공하는 연습문제를 풀며 익힌 내용을 확인하고 응용할 수도 있다. 머신러닝을 배우고 싶지만 어디서부터 시작해야 할지 막막하다면, 이 책이 인공지능 마스터로 가는 길에 좋은 친구가 될 것이다.\n" +
                             "\n" +
                             "이번에 출간된 2판은 텐서플로 2를 반영하고 비지도 학습, 자연어 처리, 생성적 적대 신경망(GAN) 등 최신 기법을 추가했다. 사이킷런과 텐서플로 2에 더해 케라스를 사용하며, 예제 코드도 소프트웨어 최신 버전에 맞춰 갱신했다. 1부(머신러닝)에는 1개 장이 추가되었고, 2부(신경망과 딥러닝)는 최신 딥러닝 기법을 방대하게 수록하여 대폭 개정되었다. 부록 2개 장이 추가되었으며, 시각적 편의를 위해 전면 컬러로 인쇄했다.")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/handsonmachinelearning.jfif")
                     .build();
 
             books.add(b17);
@@ -590,6 +593,7 @@ public class DataInitialization implements CommandLineRunner {
                     .bio("직접 구현하고 움직여보며 익히는 가장 쉬운 딥러닝 입문서\n" +
                             "\n" +
                             "이 책은 라이브러리나 프레임워크에 의존하지 않고, 딥러닝의 핵심을 ‘밑바닥부터’ 직접 만들어보며 즐겁게 배울 수 있는 본격 딥러닝 입문서이다. 술술 읽힐 만큼 쉽게 설명하였고, 역전파처럼 어려운 내용은 ‘계산 그래프’ 기법으로 시각적으로 풀이했다. 무엇보다 작동하는 코드가 있어 직접 돌려보고 요리조리 수정해보면 어려운 이론도 명확하게 이해할 수 있다. 딥러닝에 새롭게 입문하려는 분과 기초를 다시금 정리하고 싶은 현업 연구자와 개발자에게 최고의 책이 될 것이다.")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/grounddeeplearning.jfif")
                     .build();
 
             books.add(b18);
@@ -612,7 +616,9 @@ public class DataInitialization implements CommandLineRunner {
                             "대한민국학술원선정 2019 교육부 우수학술도서 『블록체인 해설서』 저자 신간,\n" +
                             "블록체인과 가상자산의 실체를 파헤쳤다!\n" +
                             "\n" +
-                            "블록체인과 암호화폐 그리고 새로이 법적으로 정의되는 가상자산의 개념에 대해 설명한다. 2판에서는 1판보다 더 많은 개념과 이론, 사례를 다루며, 비유를 통해 쉽게 이해할 수 있도록 설명한다. 블록체인의 범용성이란 어떤 것인지, 블록체인의 세부 작동 원리는 어떤 것인지, 그 진정한 효용은 무엇인지 모두 알려준다. 또한 새로이 법적으로 정의되고 있는 가상자산에 대해서도 자세히 알아본다.").build();
+                            "블록체인과 암호화폐 그리고 새로이 법적으로 정의되는 가상자산의 개념에 대해 설명한다. 2판에서는 1판보다 더 많은 개념과 이론, 사례를 다루며, 비유를 통해 쉽게 이해할 수 있도록 설명한다. 블록체인의 범용성이란 어떤 것인지, 블록체인의 세부 작동 원리는 어떤 것인지, 그 진정한 효용은 무엇인지 모두 알려준다. 또한 새로이 법적으로 정의되고 있는 가상자산에 대해서도 자세히 알아본다.")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/bitcoinandblockchain.jfif")
+                    .build();
 
             books.add(b19);
 
@@ -630,6 +636,7 @@ public class DataInitialization implements CommandLineRunner {
                     .isbn("1161752706")
                     .highestDepthCategory(blockChain)
                     .bio("블록체인 기술의 실체가 무엇인지 명확히 설명해 주는 해설서다. 블록체인이 만들어지게 된 역사적 배경은 물론 그 작동 원리를 상세히 설명해 준다. 이를 통해 진정한 효용이 무엇인지 알려준다. 수많은 블록체인들 중 가장 대표적인 비트코인, 이더리움 그리고 하이퍼레저의 작동 원리를 각각 설명 및 비교하고, 이들이 과연 어떤 효용을 가지고 있는 것인지 미래에는 어떨 것인지 명쾌한 해답을 던져 준다. 현재 블록체인 프로젝트에 관여하고 있거나, 도입을 검토 중인 회사의 일원이라면 반드시 읽어보기를 권한다. 또 블록체인 기술이라는 것이 도대체 무엇인지, 미래에는 어떠할 것인지 그 실체를 명확히 알고 싶은 모든 독자에게 명쾌한 해답을 줄 것이다.")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/blockchainhaeseol.jfif")
                     .build();
 
             books.add(b20);
@@ -647,6 +654,7 @@ public class DataInitialization implements CommandLineRunner {
                     .publicationDate(LocalDate.of(2021, 7, 26))
                     .isbn("1191600122")
                     .highestDepthCategory(blockChain)
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/blockchaininaction.jfif")
                     .bio("블록체인에 관심 있는 모든 사람을 위한 훌륭한 출발점!\n" +
                             "Dapp 개발에 대한 명확하고 통찰력이 가득한 책!\n" +
                             "\n" +
@@ -692,7 +700,7 @@ public class DataInitialization implements CommandLineRunner {
                             "2016년 출간 후 많은 사랑을 받아 온 『이것이 MySQL이다』가 MySQL 8.0 버전을 반영하여 개정되었다. 특히 ‘파이썬 기초 및 파이썬과 데이터베이스의 연동’, ‘ 파이썬으로 공간 데이터 응용 프로그래밍 작성하기’ 등의 내용을 추가하여 더욱 실무 밀착형 교재로 업그레이드 되었다.\n" +
                             "\n" +
                             "이 책은 실무에서 바로 적용 가능한 80여 가지 다양한 실습 예제를 수록하여 현업에서 이뤄지고 있는 데이터베이스 개발과 운영을 모두 체험할 수 있게 구성하였다. 또 어려운 실습도 쉽게 익힐 수 있도록 40여 개의 [저자 동영상 강의]를 무료로 제공하고 있다. 그래도 어려운 부분이 있다면 [이것이 MySQL이다 네이버 카페]에 질문을 올려보자. 저자가 직접 모든 질문에 1:1로 답변을 달아주며, MySQL 관련 최신 기술 소식도 공유할 수 있다.")
-                    .imgSrc("2021\\08\\07\\이것이MySQL이다.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%9D%B4%EA%B2%83%EC%9D%B4MySQL%EC%9D%B4%EB%8B%A4.jfif")
                     .build();
 
             books.add(b22);
@@ -721,7 +729,7 @@ public class DataInitialization implements CommandLineRunner {
                             "\n" +
                             "\n" +
                             "IT 취준생이라면 누구나 가고 싶어 하는 카카오, 라인, 삼성전자의 2016년부터 2020년까지의 코딩 테스트와 알고리즘 대회의 기출문제를 엄선하여 수록했다. 최근 5년간의 코딩 테스트 기출문제를 분석하여 반드시 알아야 하는 알고리즘을 8가지로 정리했다. 8가지 핵심 알고리즘 이론을 쉽게 설명하고, 관련 실전 문제를 풀이했다. 출제 유형 분석, 이론 설명, 기출문제 풀이까지! 어떤 코딩 테스트도 대비할 수 있을 것이다. 코딩 테스트에서 주로 선택하는 파이썬을 기반으로 설명되어 있으며, 파이썬 코드 외에도 C/C++, 자바 코드를 추가로 제공한다.")
-                    .imgSrc("2021\\08\\07\\이것이코딩테스트다.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%9D%B4%EA%B2%83%EC%9D%B4%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%8B%A4.jfif")
                     .build();
 
             books.add(b23);
@@ -744,7 +752,7 @@ public class DataInitialization implements CommandLineRunner {
                     .bio("대부분의 개발자들은 자신이 만든 프로그램을 움직이는 하부 기술에 대해 잘 알지 못한다. 코드가 잘 도는데 구태여 근원적인 하부 기술에 신경을 써야 할까? 그렇다. 하부 기술을 밑바닥부터 이해하면, 프로그램이 잘 작동하게 만들 수 있고 찾기 어려운 버그에 당황하지 않게 된다. 자신이 작성한 코드가 보안 문제로 인해 9시 뉴스에 나오기를 원하는 사람은 없을 것이다. 수많은 기술에 대한 상세 자료가 이미 온라인에 존재한다. 하지만 대부분 이런 자료들은 잘 정리되어 있지 않으며, 한꺼번에 정리해 모아둔 곳을 찾기도 어렵다.\n" +
                             "\n" +
                             "백전노장 엔지니어인 조너선 스타인하트가 쓴 『한 권으로 읽는 컴퓨터 구조와 프로그래밍』은 컴퓨터의 토대가 되는 개념을 밀도 있게 탐구한다. 또한 컴퓨터 하드웨어의 내부 구조는 물론, 하드웨어 위에서 소프트웨어가 작동하는 원리, 그리고 소프트웨어 기술 발전과 함께 역사 속에서 사람들은 기술을 사용해 어떻게 문제를 풀어왔는지 등의 다양하고도 심도 있는 내용을 다룬다. 저자는 컴퓨터라는 기계에서 프로그램 코드가 실행될 때 벌어지는지 일들에 대해 여러분이 미처 몰랐던, 혹은 잊었던 이야기들을 들려준다. 더 나은 소프트웨어와 효율적인 코드를 작성하는 법을 깨우치는 데 필요한 탄탄한 기초를 다질 수 있는 책이다.")
-                    .imgSrc("2021\\08\\07\\한권컴퓨터구조.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%ED%95%9C%EA%B6%8C%EC%BB%B4%ED%93%A8%ED%84%B0%EA%B5%AC%EC%A1%B0.jfif")
                     .build();
 
             books.add(b24);
@@ -769,7 +777,7 @@ public class DataInitialization implements CommandLineRunner {
                             "1:1 과외하듯 배우는 자바 프로그래밍 자습서 (JAVA 8 &11 지원)\n" +
                             "\n" +
                             "이 책은 독학으로 자바를 배우는 입문자가 ‘꼭 필요한 내용을 제대로’ 학습할 수 있도록 구성했다. ‘무엇을’ ‘어떻게’ 학습해야 할지 조차 모르는 입문자의 막연한 마음을 살펴, 과외 선생님이 알려주듯 친절하게, 그러나 핵심적인 내용만 콕콕 집어준다. 책의 첫 페이지를 펼쳐서 마지막 페이지를 덮을 때까지, 혼자서도 충분히 자바를 배울 수 있다는 자신감과 확신이 계속될 것이다!")
-                    .imgSrc("2021\\08\\07\\혼공자.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%ED%98%BC%EA%B3%B5%EC%9E%90.jfif")
                     .build();
 
             books.add(b25);
@@ -790,7 +798,7 @@ public class DataInitialization implements CommandLineRunner {
                     .bio("15년 이상 자바 언어를 교육해온 자바 전문강사의 노하우를 아낌 없이 담아낸 자바 입문서. 저자 직강의 인터넷 강의와 Q/A를 위한 커뮤니티(네이커 카페)까지 무료로 제공하여 자바 개발자로 가는 길을 안내한다.\n" +
                             "\n" +
                             "동영상 링크 : https://www.youtube.com/playlist?list=PLVsNizTWUw7FPokuK8Cmlt72DQEt7hKZu")
-                    .imgSrc("2021\\08\\07\\이것이자바다.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%9D%B4%EA%B2%83%EC%9D%B4%EC%9E%90%EB%B0%94%EB%8B%A4.jfif")
                     .build();
 
             books.add(b26);
@@ -819,7 +827,7 @@ public class DataInitialization implements CommandLineRunner {
                             "본 도서는 강의가 필요 없을 만큼 쉽게 설명되어 있는 책이다. 하지만 강의가 필요한 독자들을 위해서 저자가 직접 본 도서의 내용을 강의한다. 책만큼 유명한 이 강의와 함께 한다면 누구나 C언어를 쉽게 공부할 수 있을 것이다.\n" +
                             "\n" +
                             "그 사이 저자가 여러 서적을 집필하면서 쌓아온 경험과 독자들의 다양한 의견을 바탕으로 새롭게 태어난 이번 개정판은 여러분이 C언어를 공부하는데 있어서 가장 든든한 친구로 함께할 것이다.")
-                    .imgSrc("2021\\08\\07\\열혈C.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%97%B4%ED%98%88C.jfif")
                     .build();
 
             books.add(b27);
@@ -840,7 +848,7 @@ public class DataInitialization implements CommandLineRunner {
                     .bio("2004년도에 출간된 윤성우 저자 「열혈강의 C++ 프로그래밍」의 개정판이다. C언어를 이해하고 있는 독자들을 대상으로 한 C++ 기본서로서, 초보자에게 적절한 설명과 예제를 통해서 C++ 학습에 재미를 더하고 있다. 개정판에서는 초판에는 없었던 내용들이 약 120 페이지 분량으로 추가하였으며, 예제도 시대의 흐름에 맞게 수정하였다.\n" +
                             "\n" +
                             "총 4개의 파트로, 객체지향의 완성-전개-도입-C++로의 전환을 다루고 있다. 각 장이 끝날때 마다 연습문제를 수록하여 내용의 이해 정도를 스스로 확인해볼 수 있다. C언어 기반의 C++에 대한 기본적인 이해부터 클래스, 복사 생성자, 상속, 연산자 등의 세부 내용까지 다루어 C++프로그래밍에 대한 자신감을 갖게 한다.")
-                    .imgSrc("2021\\08\\07\\열혈C플플.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%97%B4%ED%98%88C%ED%94%8C%ED%94%8C.jfif")
                     .build();
 
             books.add(b28);
@@ -862,7 +870,7 @@ public class DataInitialization implements CommandLineRunner {
                     .isbn("1158392230")
                     .highestDepthCategory(js)
                     .bio("『모던 자바스크립트 Deep Dive』에서는 자바스크립트를 둘러싼 기본 개념을 정확하고 구체적으로 설명하고, 자바스크립트 코드의 동작 원리를 집요하게 파헤친다. 따라서 여러분이 작성한 코드가 컴퓨터 내부에서 어떻게 동작할 것인지 예측하고, 명확히 설명할 수 있도록 돕는다. 또한 최신 자바스크립트 명세를 반영해 안정적이고 효율적인 코드를 작성할 수 있는 기본기를 다지고, 실전에서 쓰이는 모던 자바스크립트 프레임워크나 도구를 완벽하게 이해하고 활용할 수 있게 도와준다.")
-                    .imgSrc("2021\\08\\07\\모던자스딥다이브.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EB%AA%A8%EB%8D%98%EC%9E%90%EC%8A%A4%EB%94%A5%EB%8B%A4%EC%9D%B4%EB%B8%8C.jfif")
                     .build();
 
             books.add(b29);
@@ -892,7 +900,7 @@ public class DataInitialization implements CommandLineRunner {
                             "* 루비 패키지 만들기, 루비 문서화\n" +
                             "* 마이크로소프트 윈도 환경에서 루비 사용하기\n" +
                             "* 메타프로그래밍 등 고급 기법")
-                    .imgSrc("2021\\08\\07\\루비.jpg")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EB%A3%A8%EB%B9%84.jpg")
                     .build();
 
             books.add(b30);
@@ -919,7 +927,7 @@ public class DataInitialization implements CommandLineRunner {
                             "생활 프로그래머 김창현 박사가 일상과 업무에서 파이썬 프로그래밍을 활용한 경험을 바탕으로 만들어졌다. 가장 쉬운 활용법인 계산기부터 미드 ‘프렌즈’에서 대사 추출, 아파트 실거래가 통계 분석, 포털 사이트 기사 수집까지 총 11개 프로그램을 직접 만들어 볼 수 있다. 이 프로그램들은 파이썬 문법을 한 번이라도 배운 적이 있는 사람이라면 누구나 따라 할 수 있는 수준으로 설계했다.\n" +
                             "\n" +
                             "또한, 각각의 프로그램은 우리 삶과 밀접한 생활 속 주제이므로 프로그램의 동작 방식을 이해하려고 억지로 애쓰지 않아도 된다. 파이썬 입문서와 함께 보면서 프로그래밍 감각을 기르는 사람, 또는 공부나 업무에 필요한 프로그램을 직접 개발해 보고 싶은 사람에게 적합하다. 이미 다른 언어에 익숙한 개발자가 파이썬을 빠르게 습득하고 싶을 때 지루한 문법서보다 즐겁게 배울 수 있다. ‘구슬이 서 말이어도 꿰어야 보배’라는 속담처럼 파이썬 문법 공부를 마쳤다면 이제 나만의 유용한 프로그램을 직접 만들어 보자.")
-                    .imgSrc("2021\\08\\07\\pythonbook.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/pythonbook.jfif")
                     .build();
 
             books.add(b31);
@@ -943,7 +951,7 @@ public class DataInitialization implements CommandLineRunner {
                             "조회수 300만! ‘짤막한 강좌’ 한쌤의 특별 과외\n" +
                             "\n" +
                             "구독자들의 감동과 감사 댓글이 가득한 유튜브 채널 ‘짤막한 강좌’ 한정희 선생님이 드디어 책을 냈다. 《된다! 7일 실무 엑셀》은 바쁜 직장인을 위해 단 7일 만에 엑셀을 배울 수 있게 구성했다. 1일, 2일 차엔 지출 기안서와 같은 양식을 만들며 엑셀 기본을 익힌다. 3일, 4일 차엔 엑셀의 꽃, 수식과 함수를 배운다. 특히 실무에서 가장 많이 사용하는 IF 함수와 VLOOKUP 함수를 완벽 정복한다. 5일~7일 차에는 데이터를 요약하고 시각화하는 방법, 그리고 엑셀의 끝판왕이라 할 수 있는 피벗 테이블까지 배운다. 여기에 시간을 조금 더 할애해 차근차근 엑셀을 익히고 싶은 사람을 위해 16일 코스도 준비했다. 글로 읽고 따라 하는 게 어렵다면, 책에 삽입된 QR 코드를 스캔하고 동영상 강의를 시청하자. 조회수 300만 인기 강좌를 무료로 들을 수 있다.")
-                    .imgSrc("2021\\08\\07\\엑셀책.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%97%91%EC%85%80%EC%B1%85.jfif")
                     .build();
 
 
@@ -973,7 +981,7 @@ public class DataInitialization implements CommandLineRunner {
                             "요리의 기본기를 몰라도 레시피북을 따라 하다 보면 어느새 제법 그럴듯한 요리가 완성되듯이, 파워포인트의 수많은 기능과 옵션을 전부 마스터하지 않아도 괜찮다. 마치 요리책처럼, 하나의 슬라이드 디자인이 완성되는 과정을 각각 6단계 레시피로 정리하여 초보자도 쉽게 따라 만들며 파워포인트에 익숙해질 수 있도록 했다.\n" +
                             "\n" +
                             "유튜브 13만 명의 구독자를 보유한 채널 [이지쌤] 운영, 2017~2021 Microsoft MVP 선정, 기업·학교·공공기관 등에서 강의하며 파워포인트 전문가로 활동해 온 ‘이지쌤’과 함께 오늘은 야근 말고 정시 퇴근에 도전해 보자.")
-                    .imgSrc("2021\\08\\07\\파워포인트책.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%ED%8C%8C%EC%9B%8C%ED%8F%AC%EC%9D%B8%ED%8A%B8%EC%B1%85.jfif")
                     .build();
 
 
@@ -998,7 +1006,7 @@ public class DataInitialization implements CommandLineRunner {
                     .bio("유형 분석 : 평가 항목 및 기출 문제를 분석하여 필수 기능들만 따라하며 익힐 수 있도록 구성하였습니다.\n" +
                             "실전 문제 : 연습은 실전처럼! 실전 감각을 키울 수 있도록 기출 유형 모의 고사 문제를 제공합니다.\n" +
                             "문제 해설 : 상세한 문제 해설로 작업 과정을 확인하고 복습할 수 있습니다.")
-                    .imgSrc("2021\\08\\07\\워드책.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%9B%8C%EB%93%9C%EC%B1%85.jfif")
                     .build();
 
 
@@ -1025,7 +1033,7 @@ public class DataInitialization implements CommandLineRunner {
                     .bio("알짜만 모아 놓은 한글 2020의 모든 것!\n" +
                             "\n" +
                             "항상 최신 버전이 출시되는 한글 프로그램은 처음 잘 익혀두면 여러 용도로 활용이 가능한 만능 프로그램이다. 이 책은 최신 버전의 한글 2020의 기본 기능부터 시작하여 활용하는 방법, 그리고 특별한 기능들과 실무에서 사용되는 문서들까지 자세하게 소개하고 있다. 특히 장황한 설명이 아닌 사전식 구성으로 내가 필요한 기능이 무엇인지 목차에서 보고 그 페이지로 바로 이동할 수 있으며, 학습 중 많이 궁금해 하는 부분이나 저자의 노하우를 포인트와 팁으로 구분하여 실력을 더욱 업그레이드 할 수 있게 구성하였다. 한글 메뉴의 구성부터 시작하여 스스로 입력해보고 자료를 수정하다보면 한글의 무궁무진한 기능에 감탄할 것이다.")
-                    .imgSrc("2021\\08\\07\\한글책.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%ED%95%9C%EA%B8%80%EC%B1%85.jfif")
                     .build();
 
 
@@ -1047,7 +1055,7 @@ public class DataInitialization implements CommandLineRunner {
                     .username("user1ID")
                     .password(passwordEncoder.encode("user1PWD"))
                     .provider("basic-join")
-                    .profileImg("2021\\08\\07\\30d0d174-fc05-408a-8fe6-e6dbf9e44d56_1d0b53122cd442e8bde63a80a5d2342f.jfif")
+                    .profileImg("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/30d0d174-fc05-408a-8fe6-e6dbf9e44d56_1d0b53122cd442e8bde63a80a5d2342f.jfif")
                     .role(Role.ROLE_USER)
                     .build();
 
@@ -1060,7 +1068,7 @@ public class DataInitialization implements CommandLineRunner {
                     .username("user2ID")
                     .password(passwordEncoder.encode("user2PWD"))
                     .provider("basic-join")
-                    .profileImg("2021\\08\\07\\c950c203-60e8-4767-b7b4-5bca84471ab8_lets-do-multithreaded-programming-on-coke.jpg")
+                    .profileImg("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/c950c203-60e8-4767-b7b4-5bca84471ab8_lets-do-multithreaded-programming-on-coke.jpg")
                     .role(Role.ROLE_USER)
                     .build();
 
@@ -1073,7 +1081,7 @@ public class DataInitialization implements CommandLineRunner {
                     .username("user3ID")
                     .password(passwordEncoder.encode("user3PWD"))
                     .provider("basic-join")
-                    .profileImg("2021\\08\\07\\3abd930f-c573-4153-9164-bac6d3fdf5e6_돌고래.jpg")
+                    .profileImg("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/3abd930f-c573-4153-9164-bac6d3fdf5e6_%EB%8F%8C%EA%B3%A0%EB%9E%98.jpg")
                     .role(Role.ROLE_USER)
                     .build();
 
@@ -1086,7 +1094,7 @@ public class DataInitialization implements CommandLineRunner {
                     .username("user4ID")
                     .password(passwordEncoder.encode("user4PWD"))
                     .provider("basic-join")
-                    .profileImg("2021\\08\\07\\95402cc3-f913-47fc-ae24-3f2bee29ded2_3d921f5ec0ee99b9fedab91cc31ecd65.jpeg")
+                    .profileImg("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/95402cc3-f913-47fc-ae24-3f2bee29ded2_3d921f5ec0ee99b9fedab91cc31ecd65.jpeg")
                     .role(Role.ROLE_USER)
                     .build();
 
