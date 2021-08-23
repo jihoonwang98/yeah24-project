@@ -1,14 +1,14 @@
 
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/yeah24
-    username: sa
-    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://database-1.ctzbdwt4lwnj.ap-northeast-2.rds.amazonaws.com:3306/yeah24?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: dhkdwlgns98
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate.format_sql: true
       hibernate.default_batch_fetch_size: 500
