@@ -198,7 +198,7 @@
 
     <div th:each="book: ${bookListResponse.books}" class="card d-flex flex-row align-items-center">
         <div class="p-4">
-            <img th:if="${book.imgSrc != null}" th:src="@{/display(imgSrc=${book.imgSrc})}" width="130px">
+            <img th:if="${book.imgSrc != null}" th:src="${book.imgSrc}" width="130px">
             <img th:if="${book.imgSrc == null}" th:src="@{/img/no-image.jpg}" width="130px">
         </div>
         <div class="card-body">

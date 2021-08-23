@@ -32,7 +32,7 @@
                      th:src="@{/img/no-image.jpg}">
 
                 <img th:if="${user.profileImg != null}" width="150px" height="150px" class="rounded-circle"
-                     th:src="@{/display(imgSrc=${user.profileImg})}">
+                     th:src="${user.profileImg}">
             </div>
         </div>
 
@@ -54,7 +54,7 @@
                          th:src="@{/img/no-image.jpg}">
 
                     <img th:if="${book.imgSrc != null}" width="150px" height="150px"
-                         th:src="@{/display(imgSrc=${book.imgSrc})}">
+                         th:src="${book.imgSrc}">
                 </div>
             </div>
 

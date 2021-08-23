@@ -37,7 +37,7 @@
                      th:src="@{/img/no-image.jpg}">
 
                 <img th:if="${authorDetailDTO.imgSrc != null}" width="150px" height="150px" class="rounded-circle"
-                     th:src="@{/display(imgSrc=${authorDetailDTO.imgSrc})}">
+                     th:src="${authorDetailDTO.imgSrc}">
             </div>
         </div>
 
@@ -64,7 +64,7 @@
                          th:src="@{/img/no-image.jpg}">
 
                     <img th:if="${book.imgSrc != null}" width="150px" height="150px"
-                         th:src="@{/display(imgSrc=${book.imgSrc})}">
+                         th:src="${book.imgSrc}">
                 </div>
             </div>
 

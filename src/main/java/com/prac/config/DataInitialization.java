@@ -172,7 +172,7 @@ public class DataInitialization implements CommandLineRunner {
                     .name("로블록스 게임 제작 무작정 따라하기")
                     .price(18000)
                     .stockQuantity(10)
-                    .imgSrc("2021\\08\\07\\roblox.jfif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/roblox.jfif")
                     .build();
 
             books.add(b1);
@@ -181,7 +181,7 @@ public class DataInitialization implements CommandLineRunner {
             Author leejemin = Author.builder()
                     .name("이제민")
                     .bio("2,000명 이상의 유료 온라인 수강생을 가진 게임 개발 트레이너입니다. 해외 온라인 강의 플랫폼 유데미(Udemy)의 베스트셀러 유니티 강의 「retr0의 유니티 게임 프로그래밍 에센스」를 제작했습니다. 이는 현재까지 유데미에서 가장 평점과 판매량이 높은 한국어 강의입니다. 또한 <메이드 아가씨> 등 유명 서브컬처 게임을 만든 독립 개발자이기도 합니다. 유튜브에 무료 게임 프로그래밍 교육 채널 retr0를 운영 중입니다")
-                    .imgSrc("2021\\08\\07\\작가-이제민.gif")
+                    .imgSrc("https://yeah24-image.s3.ap-northeast-2.amazonaws.com/2021/08/23/%EC%9E%91%EA%B0%80-%EC%9D%B4%EC%A0%9C%EB%AF%BC.gif")
                     .build();
 
             Book b2 = Book.builder()

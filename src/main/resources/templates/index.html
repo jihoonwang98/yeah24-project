@@ -96,7 +96,7 @@
             <div class="carousel-item" th:classappend="${bookStat.first} ? 'active': ''" data-bs-interval="10000" th:each="book: ${newBooks}">
                 <div class="container-fluid d-flex flex-row align-items-center">
                     <div class="p-4">
-                        <img th:if="${book.imgSrc != null}" th:src="@{/display(imgSrc=${book.imgSrc})}" width="130px" class="d-block">
+                        <img th:if="${book.imgSrc != null}" th:src="${book.imgSrc}" width="130px" class="d-block">
                         <img th:if="${book.imgSrc == null}" th:src="@{/img/no-image.jpg}" width="130px" class="d-block">
                     </div>
 

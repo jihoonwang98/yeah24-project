@@ -129,7 +129,7 @@
         <div class="row mb-3">
             <div class="picture-container">
                 <div class="picture">
-                    <img th:if="${modifyDTO.profileImg != null}" th:src="@{/display(imgSrc=${modifyDTO.profileImg})}" class="picture-src" id="wizardPicturePreview" title="">
+                    <img th:if="${modifyDTO.profileImg != null}" th:src="${modifyDTO.profileImg}" class="picture-src" id="wizardPicturePreview" title="">
                     <img th:if="${modifyDTO.profileImg == null}" th:src="@{/img/no-image.jpg}" class="picture-src" id="wizardPicturePreview" title="">
                     <input name="profileImg" type="file" id="wizard-picture" accept="image/*" class="">
                 </div>

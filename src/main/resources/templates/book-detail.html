@@ -91,7 +91,7 @@
 <div layout:fragment="contents" th:with="book=${bookDetailResponse.book}, reviewDTO=${bookDetailResponse.book.review}">
     <div class="d-flex p-5 align-items-center">
         <div class="pe-4">
-            <img th:if="${book.imgSrc != null}" width="250px" th:src="@{/display(imgSrc=${book.imgSrc})}">
+            <img th:if="${book.imgSrc != null}" width="250px" th:src="${book.imgSrc}">
             <img th:if="${book.imgSrc == null}" alt="책_이미지" width="250px" th:src="@{/img/no-image.jpg}">
         </div>
 
@@ -187,7 +187,7 @@
                          th:src="@{/img/no-image.jpg}">
 
                     <img th:if="${author.imgSrc != null}" width="100px" height="100px" class="rounded-circle float-start me-4"
-                         th:src="@{/display(imgSrc=${author.imgSrc})}">
+                         th:src="${author.imgSrc}">
 
                     <span th:text="${author.bio}">1973년 경기도 수원 출생으로 청주대 철학과와 서울예대 문예창작과를 졸업하였다. 1999년 [동아일보] 신춘문예에 단편소설 「레고로 만든 집」이 당선되어 등단했고, 「서른세 개의 단추가 달린 코트」가 2001년 「계단」이 연이어 『현장 비평가가 뽑은 올해의 좋은 소설 2001』에 실렸으며, 「모자」는 『2001년 현대문학상 수상 작품집』에, 「그림자들」은 『2001년 이상문학상 수상 작품집』에 수록되었다. 「유턴지점에 보물지도를 묻다」로 현대문학상을 수상했다. 「부메랑」으로 2011년 11회 황순원문학상을 수상했다. 그 밖에 이수문학상, 이효석문학상, 오늘의 젊은 예술가상, 한국일보문학상, 김승옥문학상 대상을 수상했다. 소설집 『레고로 만든 집』, 『거기, 당신?』, 『감기』, 『웃는 동안』, 『베개를 베다』, 『날마다 만우절』 등이 있고, 중편소설 『첫 문장』, 장편소설 『구경꾼들』, 『상냥한 사람』, 중편소설 『첫 문장』 등이 있다.
                 </span>
@@ -214,7 +214,7 @@
                         <div style="width: 200px;" class="d-flex flex-column align-items-center">
                             <div>
                                 <img th:if="${review.user.profileImg == null}" width="150px" height="150px" class="rounded-circle" th:src="@{/img/no-image.jpg}">
-                                <img th:if="${review.user.profileImg != null}" width="150px" height="150px" class="rounded-circle" th:src="@{/display(imgSrc=${review.user.profileImg})}">
+                                <img th:if="${review.user.profileImg != null}" width="150px" height="150px" class="rounded-circle" th:src="${review.user.profileImg}">
                             </div>
                             <div style="width: 200px;" class="pt-4 text-center">
                                 <span th:text="${#temporals.format(review.regDate, 'yyyy-MM-dd')}">2021-07-30</span><br><br>
