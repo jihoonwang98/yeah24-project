@@ -11,6 +11,6 @@
 - [9. Spring Security 적용하기](https://github.com/jihoonwang98/yeah24-project/blob/master/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%84%A4%EB%AA%85/%5BYeah%2024%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%5D%209.%20Spring%20Security%20%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0.md)
 - [10. Controller 계층 구현하기](https://github.com/jihoonwang98/yeah24-project/blob/master/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%84%A4%EB%AA%85/%5BYeah%2024%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%5D%2010.%20Controller%20%EA%B3%84%EC%B8%B5%20%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.md)
 - [11. AWS에 배포하기](https://github.com/jihoonwang98/yeah24-project/blob/master/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%84%A4%EB%AA%85/%5BYeah%2024%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%5D%2011.%20AWS%EC%97%90%20%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0.md)
-- [12. 페이지별 기능 정리]()
+- [12. 페이지별 기능 정리](https://github.com/jihoonwang98/yeah24-project/blob/master/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%84%A4%EB%AA%85/%5BYeah%2024%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%5D%2012.%20%ED%8E%98%EC%9D%B4%EC%A7%80%EB%B3%84%20%EA%B8%B0%EB%8A%A5%20%EC%A0%95%EB%A6%AC.md)
 
 ### [Yeah24 홈페이지 보러가기](http://ec2-3-38-80-246.ap-northeast-2.compute.amazonaws.com:8080/)
