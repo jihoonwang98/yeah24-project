@@ -137,7 +137,7 @@
 
 
 
-![schema](C:\Users\user\Desktop\no24\schema.png)
+![schema](https://github.com/jihoonwang98/yeah24-project/blob/master/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%84%A4%EB%AA%85/schema.png)
 
 
 
